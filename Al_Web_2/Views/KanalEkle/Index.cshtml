@@ -1,0 +1,83 @@
+﻿@using Al_Web_2.Models
+@model List<KanalEkle>
+@{
+    ViewBag.Title = "KanalEkle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <a href="/KanalEkle/Ekle" class="btn btn-primary">Kanal Ekle</a>
+    <br />
+    <br />
+
+    @using (Html.BeginForm("Index", "KanalEkle", FormMethod.Post))
+    {
+        <table id="tblKanal" class="table table-bordered">
+            <thead>
+                <tr>
+                    @if (User.IsInRole("A"))
+                    {
+                        <th><input type="checkbox" id="checkBoxAll" /></th>
+
+                        <th style="width: 100px;">Kanal İsim</th>
+                        <th style="width: 100px;">Kanal Tip</th>
+                        <th>Kullanıcı</th>
+                        <th style="width: 100px;">Sil</th>
+                        <th style="width: 150px;">Güncelle</th>
+                    }
+
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><input type="checkbox" class="checkbox" value="@item.Id" name="kanalId" /></td>
+
+                    <td>@item.Name</td>
+                    <td>@item.Type</td>
+                    <td>
+                        <div style='padding: 3px; width:300px; word-break: break-all; word-wrap: break-word; max-width: 100%; height: 80px; overflow: auto;'>
+
+                            @foreach (var itemk in item.Kullanicilar)
+                            {
+                                <span style="margin-bottom:7px;">@($"{itemk.Ad} {itemk.Soyad}")<br /></span>
+                            }
+                        </div>
+
+                    </td>
+
+                    @if (User.IsInRole("A"))
+                    {
+                        <td>@Html.ActionLink("Sil", "Sil", new { id = item.Id }, new { @class = "btn btn-primary", onclick = "return confirm('Silmek İstiyor Musunuz ?')" })</td>
+                        <td><a href="/KanalEkle/Guncelle/@item.Id" class="btn btn-primary">Güncelle</a></td>
+                    }
+
+
+                </tr>
+            }
+        </table>
+
+        <input type="submit" value="Tümünü Sil" class="btn btn-danger" style="margin-top:10px;" onclick="return confirm('Emin misiniz ?')" />
+    }
+</div>
+
+
+    <link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-colvis-1.3.1/b-flash-1.3.1/b-html5-1.3.1/b-print-1.3.1/r-2.1.1/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#tblKanal').DataTable({
+                language: {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
+            $('#checkBoxAll').click(function () {
+                if ($(this).is(":checked"))
+                    $('.checkbox').prop('checked', true);
+                else
+                    $('.checkbox').prop('checked', false);
+            });
+
+        });
+    </script>

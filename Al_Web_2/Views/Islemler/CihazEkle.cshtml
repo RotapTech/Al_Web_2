@@ -1,0 +1,850 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<!--<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CihazEkle</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+
+
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.4.0/css/select.bootstrap4.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"></script>
+
+
+
+
+
+    <meta name="viewport" content="width-device-width">
+    <title>CihazList</title>
+
+
+
+
+
+    <style>
+            body {
+                margin-top: 20px;
+            }
+
+
+            /* USER LIST TABLE */
+            /*   .user-list tbody td > img {
+            position: relative;
+            max-width: 50px;
+            float: left;
+            margin-right: 15px;
+        }*/
+
+            .user-list tbody td .user-link {
+                display: block;
+                font-size: 1.25em;
+                padding-top: 3px;
+                margin-left: 60px;
+            }
+
+            .user-list tbody td .user-subhead {
+                font-size: 0.875em;
+                font-style: italic;
+            }
+
+            /* TABLES */
+            .table {
+                border-collapse: separate;
+            }
+
+            .table-hover > tbody > tr:hover > td,
+            .table-hover > tbody > tr:hover > th {
+                background-color: #eee;
+            }
+
+            .table thead > tr > th {
+                border-bottom: 1px solid #C2C2C2;
+                padding-bottom: 0;
+            }
+
+            .table tbody > tr > td {
+                font-size: 0.875em;
+                background: #f5f5f5;
+                border-top: 10px solid #fff;
+                vertical-align: middle;
+                padding: 12px 8px;
+            }
+
+                .table tbody > tr > td:first-child,
+                .table thead > tr > th:first-child {
+                    padding-left: 20px;
+                }
+
+            .table thead > tr > th span {
+                border-bottom: 2px solid #C2C2C2;
+                display: inline-block;
+                padding: 0 5px;
+                padding-bottom: 5px;
+                font-weight: normal;
+            }
+
+            .table thead > tr > th > a span {
+                color: #344644;
+            }
+
+                .table thead > tr > th > a span:after {
+                    content: "\f0dc";
+                    font-family: FontAwesome;
+                    font-style: normal;
+                    font-weight: normal;
+                    text-decoration: inherit;
+                    margin-left: 5px;
+                    font-size: 0.75em;
+                }
+
+            .table thead > tr > th > a.asc span:after {
+                content: "\f0dd";
+            }
+
+            .table thead > tr > th > a.desc span:after {
+                content: "\f0de";
+            }
+
+            .table thead > tr > th > a:hover span {
+                text-decoration: none;
+                color: #2bb6a3;
+                border-color: #2bb6a3;
+            }
+
+            .table.table-hover tbody > tr > td {
+                -webkit-transition: background-color 0.15s ease-in-out 0s;
+                transition: background-color 0.15s ease-in-out 0s;
+            }
+
+            .table tbody tr td .call-type {
+                display: block;
+                font-size: 0.75em;
+                text-align: center;
+            }
+
+            .table tbody tr td .first-line {
+                line-height: 1.5;
+                font-weight: 400;
+                font-size: 1.125em;
+            }
+
+                .table tbody tr td .first-line span {
+                    font-size: 0.875em;
+                    color: #969696;
+                    font-weight: 300;
+                }
+
+            .table tbody tr td .second-line {
+                font-size: 0.875em;
+                line-height: 1.2;
+            }
+
+            .table a.table-link {
+                margin: 0 5px;
+                font-size: 1.125em;
+            }
+
+                .table a.table-link:hover {
+                    text-decoration: none;
+                    color: #2aa493;
+                }
+
+                .table a.table-link.danger {
+                    color: #fe635f;
+                }
+
+                    .table a.table-link.danger:hover {
+                        color: #dd504c;
+                    }
+
+            .table-products tbody > tr > td {
+                background: none;
+                border: none;
+                border-bottom: 1px solid #ebebeb;
+                -webkit-transition: background-color 0.15s ease-in-out 0s;
+                transition: background-color 0.15s ease-in-out 0s;
+                position: relative;
+            }
+
+            .table-products tbody > tr:hover > td {
+                text-decoration: none;
+                background-color: #f6f6f6;
+            }
+
+            .table-products .name {
+                display: block;
+                font-weight: 600;
+                padding-bottom: 7px;
+            }
+
+            .table-products .price {
+                display: block;
+                text-decoration: none;
+                width: 50%;
+                float: left;
+                font-size: 0.875em;
+            }
+
+                .table-products .price > i {
+                    color: #8dc859;
+                }
+
+            .table-products .warranty {
+                display: block;
+                text-decoration: none;
+                width: 50%;
+                float: left;
+                font-size: 0.875em;
+            }
+
+                .table-products .warranty > i {
+                    color: #f1c40f;
+                }
+
+            .table tbody > tr.table-line-fb > td {
+                background-color: #9daccb;
+                color: #262525;
+            }
+
+            .table tbody > tr.table-line-twitter > td {
+                background-color: #9fccff;
+                color: #262525;
+            }
+
+            .table tbody > tr.table-line-plus > td {
+                background-color: #eea59c;
+                color: #262525;
+            }
+
+            .table-stats .status-social-icon {
+                font-size: 1.9em;
+                vertical-align: bottom;
+            }
+
+            .table-stats .table-line-fb .status-social-icon {
+                color: #556484;
+            }
+
+            .table-stats .table-line-twitter .status-social-icon {
+                color: #5885b8;
+            }
+
+            .table-stats .table-line-plus .status-social-icon {
+                color: #a75d54;
+            }
+    </style>
+</head>
+
+<body>-->
+    @*<script src="~/JS/CihazList.js"></script>*@
+    <!--<div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="main-box clearfix">
+                    <h2>Cihaz Listesi</h2>
+                    <a href="#" class="float-right" onclick="CihazEkle()">
+                        <span class="fa-stack">
+                            <i class="fa fa-square fa-stack-2x"></i>
+                            <i class="fa fa-plus fa-stack-1x fa-inverse" title="Ekle"></i>
+                        </span>
+                    </a>
+                    <div class="table-responsive">
+                        <table class="table user-list" id="tblCihazList">
+                            <thead>
+                                <tr>
+                                    <th><span>Cihaz Adı</span></th>
+                                    <th><span>Cihaz Seri No</span></th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <p>X Cihazı</p>
+                                    </td>
+                                    <td><span>1234</span></td>
+                                    <td style="width: 20%;">
+                                        <a href="#" class="table-link">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse" title="Güncelle"></i>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse" title="Sil"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>Y Cihazı</p>
+                                    </td>
+                                    <td><span>1234</span></td>
+                                    <td style="width: 20%;">
+                                        <a href="#" class="table-link">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse" title="Güncelle"></i>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse" title="Sil"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>A Cihazı</p>
+                                    </td>
+                                    <td><span>1234</span></td>
+                                    <td style="width: 20%;">
+                                        <a href="#" class="table-link">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse" title="Güncelle"></i>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse" title="Sil"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>B Cihazı</p>
+                                    </td>
+                                    <td><span>1234</span></td>
+                                    <td style="width: 20%;">
+                                        <a href="#" class="table-link">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse" title="Güncelle"></i>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse" title="Sil"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <p>C Cihazı</p>
+                                    </td>
+                                    <td><span>1234</span></td>
+                                    <td style="width: 20%;">
+                                        <a href="#" class="table-link">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-pencil fa-stack-1x fa-inverse" title="Güncelle"></i>
+                                            </span>
+                                        </a>
+                                        <a href="#" class="table-link danger">
+                                            <span class="fa-stack">
+                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse" title="Sil"></i>
+                                            </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>-->
+                    @*<ul class="pagination pull-right">
+                            <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+                        </ul>*@
+                <!--</div>
+                <hr />
+            </div>
+            <div class="col-lg-6 d-none" id="dvCihazEkle">
+                <form>
+                    <div class="form-group">
+                        <label for="txtCihazAd">Cihaz Adı</label>
+                        <input type="text" class="form-control" id="txtCihazAd" placeholder="Lütfen cihaz adı giriniz...">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtCihazSeriNo">Cihaz Seri Numarası</label>
+                        <input type="text" class="form-control" id="txtCihazSeriNo" placeholder="Lütfen cihaz seri no giriniz...">
+                    </div>
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-4"><button type="button" class="btn btn-success ml-4">Ekle</button></div>
+                        <div class="col-4"></div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+  
+</body>
+</html>-->
+
+
+
+
+
+
+
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="./assets/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.4.0/css/select.bootstrap4.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"></script>
+
+
+
+
+
+    <meta name="viewport" content="width-device-width">
+    <title>CihazList</title>
+</head>
+<body>
+    <div>
+
+
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="main-box clearfix">
+                        <h2>Cihaz Listesi</h2>
+                        <a href="#" class="float-right" onclick="CihazEkle()">
+                            <span class="fa-stack">
+                                <i class="fa fa-square fa-stack-2x"></i>
+                                <i class="fa fa-plus fa-stack-1x fa-inverse" title="Ekle"></i>
+                            </span>
+                        </a>
+                        <div class="table-responsive">
+                            <div id="tblCihazList_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+                 
+                            </div><div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table user-list dataTable no-footer" id="tblCihazList" aria-describedby="tblCihazList_info">
+                                            <thead>
+                                                <tr><th class="sorting sorting_asc" tabindex="0" aria-controls="tblCihazList" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Cihaz Adı: activate to sort column descending" style="width: 354.703px;"><span>Cihaz Adı</span></th><th class="sorting" tabindex="0" aria-controls="tblCihazList" rowspan="1" colspan="1" aria-label="Cihaz Seri No: activate to sort column ascending" style="width: 443.297px;"><span>Cihaz Seri No</span></th><th class="sorting" tabindex="0" aria-controls="tblCihazList" rowspan="1" colspan="1" aria-label="&amp;nbsp;: activate to sort column ascending" style="width: 178px;">&nbsp;</th></tr>
+                                            </thead>
+                                            <tbody>
+
+
+
+
+
+                                                <tr class="odd">
+                                                    <td class="sorting_1">
+                                                        <p>A Cihazı</p>
+                                                    </td>
+                                                    <td><span>1234</span></td>
+                                                    <td style="width: 20%;">
+                                                        <a href="#" class="table-link">
+                                                            <span class="fa-stack">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-pencil fa-stack-1x fa-inverse" title="Güncelle"></i>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="table-link danger">
+                                                            <span class="fa-stack">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse" title="Sil"></i>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="even">
+                                                    <td class="sorting_1">
+                                                        <p>B Cihazı</p>
+                                                    </td>
+                                                    <td><span>1234</span></td>
+                                                    <td style="width: 20%;">
+                                                        <a href="#" class="table-link">
+                                                            <span class="fa-stack">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-pencil fa-stack-1x fa-inverse" title="Güncelle"></i>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="table-link danger">
+                                                            <span class="fa-stack">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse" title="Sil"></i>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="odd">
+                                                    <td class="sorting_1">
+                                                        <p>C Cihazı</p>
+                                                    </td>
+                                                    <td><span>1234</span></td>
+                                                    <td style="width: 20%;">
+                                                        <a href="#" class="table-link">
+                                                            <span class="fa-stack">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-pencil fa-stack-1x fa-inverse" title="Güncelle"></i>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="table-link danger">
+                                                            <span class="fa-stack">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse" title="Sil"></i>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="even">
+                                                    <td class="sorting_1">
+                                                        <p>X Cihazı</p>
+                                                    </td>
+                                                    <td><span>1234</span></td>
+                                                    <td style="width: 20%;">
+                                                        <a href="#" class="table-link">
+                                                            <span class="fa-stack">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-pencil fa-stack-1x fa-inverse" title="Güncelle"></i>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="table-link danger">
+                                                            <span class="fa-stack">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse" title="Sil"></i>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr class="odd">
+                                                    <td class="sorting_1">
+                                                        <p>Y Cihazı</p>
+                                                    </td>
+                                                    <td><span>1234</span></td>
+                                                    <td style="width: 20%;">
+                                                        <a href="#" class="table-link">
+                                                            <span class="fa-stack">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-pencil fa-stack-1x fa-inverse" title="Güncelle"></i>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="table-link danger">
+                                                            <span class="fa-stack">
+                                                                <i class="fa fa-square fa-stack-2x"></i>
+                                                                <i class="fa fa-trash-o fa-stack-1x fa-inverse" title="Sil"></i>
+                                                            </span>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                    
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                </div>
+                <div class="col-lg-6 d-none" id="dvCihazEkle">
+                    <form>
+                        <div class="form-group">
+                            <label for="txtCihazAd">Cihaz Adı</label>
+                            <input type="text" class="form-control" id="txtCihazAd" placeholder="Lütfen cihaz adı giriniz...">
+                        </div>
+                        <div class="form-group">
+                            <label for="txtCihazSeriNo">Cihaz Seri Numarası</label>
+                            <input type="text" class="form-control" id="txtCihazSeriNo" placeholder="Lütfen cihaz seri no giriniz...">
+                        </div>
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-4"><button type="button" class="btn btn-success ml-4">Ekle</button></div>
+                            <div class="col-4"></div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <style>
+                    body {
+                        margin-top: 20px;
+                    }
+
+
+                    /* USER LIST TABLE */
+                    /*   .user-list tbody td > img {
+                position: relative;
+                max-width: 50px;
+                float: left;
+                margin-right: 15px;
+            }*/
+
+                    .user-list tbody td .user-link {
+                        display: block;
+                        font-size: 1.25em;
+                        padding-top: 3px;
+                        margin-left: 60px;
+                    }
+
+                    .user-list tbody td .user-subhead {
+                        font-size: 0.875em;
+                        font-style: italic;
+                    }
+
+                    /* TABLES */
+                    .table {
+                        border-collapse: separate;
+                    }
+
+                    .table-hover > tbody > tr:hover > td,
+                    .table-hover > tbody > tr:hover > th {
+                        background-color: #eee;
+                    }
+
+                    .table thead > tr > th {
+                        border-bottom: 1px solid #C2C2C2;
+                        padding-bottom: 0;
+                    }
+
+                    .table tbody > tr > td {
+                        font-size: 0.875em;
+                        background: #f5f5f5;
+                        border-top: 10px solid #fff;
+                        vertical-align: middle;
+                        padding: 12px 8px;
+                    }
+
+                        .table tbody > tr > td:first-child,
+                        .table thead > tr > th:first-child {
+                            padding-left: 20px;
+                        }
+
+                    .table thead > tr > th span {
+                        border-bottom: 2px solid #C2C2C2;
+                        display: inline-block;
+                        padding: 0 5px;
+                        padding-bottom: 5px;
+                        font-weight: normal;
+                    }
+
+                    .table thead > tr > th > a span {
+                        color: #344644;
+                    }
+
+                        .table thead > tr > th > a span:after {
+                            content: "\f0dc";
+                            font-family: FontAwesome;
+                            font-style: normal;
+                            font-weight: normal;
+                            text-decoration: inherit;
+                            margin-left: 5px;
+                            font-size: 0.75em;
+                        }
+
+                    .table thead > tr > th > a.asc span:after {
+                        content: "\f0dd";
+                    }
+
+                    .table thead > tr > th > a.desc span:after {
+                        content: "\f0de";
+                    }
+
+                    .table thead > tr > th > a:hover span {
+                        text-decoration: none;
+                        color: #2bb6a3;
+                        border-color: #2bb6a3;
+                    }
+
+                    .table.table-hover tbody > tr > td {
+                        -webkit-transition: background-color 0.15s ease-in-out 0s;
+                        transition: background-color 0.15s ease-in-out 0s;
+                    }
+
+                    .table tbody tr td .call-type {
+                        display: block;
+                        font-size: 0.75em;
+                        text-align: center;
+                    }
+
+                    .table tbody tr td .first-line {
+                        line-height: 1.5;
+                        font-weight: 400;
+                        font-size: 1.125em;
+                    }
+
+                        .table tbody tr td .first-line span {
+                            font-size: 0.875em;
+                            color: #969696;
+                            font-weight: 300;
+                        }
+
+                    .table tbody tr td .second-line {
+                        font-size: 0.875em;
+                        line-height: 1.2;
+                    }
+
+                    .table a.table-link {
+                        margin: 0 5px;
+                        font-size: 1.125em;
+                    }
+
+                        .table a.table-link:hover {
+                            text-decoration: none;
+                            color: #2aa493;
+                        }
+
+                        .table a.table-link.danger {
+                            color: #fe635f;
+                        }
+
+                            .table a.table-link.danger:hover {
+                                color: #dd504c;
+                            }
+
+                    .table-products tbody > tr > td {
+                        background: none;
+                        border: none;
+                        border-bottom: 1px solid #ebebeb;
+                        -webkit-transition: background-color 0.15s ease-in-out 0s;
+                        transition: background-color 0.15s ease-in-out 0s;
+                        position: relative;
+                    }
+
+                    .table-products tbody > tr:hover > td {
+                        text-decoration: none;
+                        background-color: #f6f6f6;
+                    }
+
+                    .table-products .name {
+                        display: block;
+                        font-weight: 600;
+                        padding-bottom: 7px;
+                    }
+
+                    .table-products .price {
+                        display: block;
+                        text-decoration: none;
+                        width: 50%;
+                        float: left;
+                        font-size: 0.875em;
+                    }
+
+                        .table-products .price > i {
+                            color: #8dc859;
+                        }
+
+                    .table-products .warranty {
+                        display: block;
+                        text-decoration: none;
+                        width: 50%;
+                        float: left;
+                        font-size: 0.875em;
+                    }
+
+                        .table-products .warranty > i {
+                            color: #f1c40f;
+                        }
+
+                    .table tbody > tr.table-line-fb > td {
+                        background-color: #9daccb;
+                        color: #262525;
+                    }
+
+                    .table tbody > tr.table-line-twitter > td {
+                        background-color: #9fccff;
+                        color: #262525;
+                    }
+
+                    .table tbody > tr.table-line-plus > td {
+                        background-color: #eea59c;
+                        color: #262525;
+                    }
+
+                    .table-stats .status-social-icon {
+                        font-size: 1.9em;
+                        vertical-align: bottom;
+                    }
+
+                    .table-stats .table-line-fb .status-social-icon {
+                        color: #556484;
+                    }
+
+                    .table-stats .table-line-twitter .status-social-icon {
+                        color: #5885b8;
+                    }
+
+                    .table-stats .table-line-plus .status-social-icon {
+                        color: #a75d54;
+                    }
+        </style>
+
+        <script>
+            function CihazEkle() {
+                document.getElementById('dvCihazEkle').classList.remove("d-none");
+            }
+            $('#tblCihazList').DataTable();
+        </script>
+
+
+
+ 
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+

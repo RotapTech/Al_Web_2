@@ -1,0 +1,131 @@
+﻿@using Al_Web_2.Models
+@model List<Kullanicilar>
+@{
+    ViewBag.Title = "Kullanicilar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="margin-left:-250px"  >
+    <a href="/KullaniciEkle/Ekle" class="btn btn-primary">Kullanıcı Ekle</a>
+
+    <br />
+    <br />
+
+    @using (Html.BeginForm("Index", "KullaniciEkle", FormMethod.Post))
+    {
+
+        <table id="tblKategori" class="table table-bordered">
+            <thead>
+                <tr>
+                    @if (User.IsInRole("A"))
+                    {
+                        <th><input type="checkbox" id="checkBoxAll" /></th>
+                        <th>#</th>
+                        <th>Ad</th>
+                        <th>Soyad</th>
+                        <th>Email</th>
+                        <th>Kullanıcı Adı</th>
+                        @*<th>Şifre</th>
+                            <th>Şifre Tekrar</th>
+                            <th>Rol</th>*@
+                        <th>Abonelik Tarihi</th>
+                        <th>Firma</th>
+                        <th>Kanal İsim - Tip</th>
+                        <th>Cihaz İsim - Seri No - Sim Kart</th>
+                        <th>Sil</th>
+                        <th>Güncelle</th>
+                    }
+
+                </tr>
+            </thead>
+
+
+            @for (int i = 0; i < Model.Count; i++)
+            {
+
+                <tr>
+
+                    <td><input type="checkbox" class="checkbox" value="@Model[i].Id" name="userId" /></td>
+                    <td>@($"{i + 1}")</td>
+                    <td>@Model[i].Ad</td>
+                    <td>@Model[i].Soyad</td>
+                    <td>@Model[i].Email</td>
+                    <td>@Model[i].KullaniciAd</td>
+                    @*<td>@Model[i].Sifre</td>
+                        <td>@Model[i].SifreTekrar</td>
+                        <td>@Model[i].Rol</td>*@
+                    <td>@Model[i].AbonelikTarih.ToString("dd/MM/yyyy")</td>
+                    <td>@(Model[i].SirketEkle?.SirketIsim)</td>
+
+                    <td>
+                        <div style='padding: 3px; width: 230px; word-break: break-all; word-wrap: break-word; max-width: 100%; height: 80px; overflow: auto;'>
+                            @foreach (var itemk in Model[i].KanalEkle)
+                            {
+
+                                <span style="margin-bottom:7px;">@($"{itemk.Name} / {itemk.Type}")<br /></span>
+                            }
+                        </div>
+
+                    </td>
+                    <td>
+                        <div style='padding: 3px; width: 350px; word-break: break-all; word-wrap: break-word; max-width: 100%; height: 80px; overflow: auto;'>
+                            @foreach (var itemc in Model[i].CihazEkle)
+                            {
+
+                                <span style="margin-bottom:7px;">@($"{itemc.CihazAd} / {itemc.CihazSeriNo} /  {itemc.SimCard}")<br /></span>
+
+                            }
+                        </div>
+                    </td>
+
+                    @if (User.IsInRole("A"))
+                    {
+                        <td>@Html.ActionLink("Sil", "Sil", new { id = Model[i].Id }, new { @class = "btn btn-primary", onclick = "return confirm('Silmek İstiyor Musunuz ?')" })</td>
+                        <td><a href="/KullaniciEkle/Guncelle/@Model[i].Id" class="btn btn-primary">Güncelle</a></td>
+                    }
+                </tr>
+            }
+        </table>
+        <input type="submit" value="Tümünü Sil" class="btn btn-danger" style="margin-top:10px;" onclick="return confirm('Emin misiniz ?')" />
+
+    }
+</div>
+   
+
+
+
+
+
+<link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.7/jq-2.2.4/jszip-3.1.3/pdfmake-0.1.27/dt-1.10.15/b-1.3.1/b-colvis-1.3.1/b-flash-1.3.1/b-html5-1.3.1/b-print-1.3.1/r-2.1.1/sc-1.4.2/se-1.2.2/datatables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#tblKategori').DataTable({
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+            }
+        });
+        $('#checkBoxAll').click(function () {
+            if ($(this).is(":checked"))
+                $('.checkbox').prop('checked', true);
+            else
+                $('.checkbox').prop('checked', false);
+        });
+
+
+    });
+</script>
+
+@*<script type="text/javascript" src="@Url.Content("~/Scripts/")jquery-1.7.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#checkBoxAll').click(function () {
+                if ($(this).is(":checked"))
+                    $('.checkbox').prop('checked', true);
+                else
+                    $('.checkbox').prop('checked', false);
+            });
+        });
+
+    </script>*@

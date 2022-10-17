@@ -1,0 +1,54 @@
+﻿@model Al_Web_2.Models.Kullanicilar
+@{
+    Layout = null;
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<form method="post">
+    <div class="container">
+        <br />
+        <div class="tox-form__group">
+            <label>Ad</label>
+            <input type="text" name="Ad" value="@Model.Ad" class="form-control" />
+            <br />
+        </div>
+
+
+        <div class="tox-form__group">
+            <label>Soyad</label>
+            <input type="text" name="Soyad" value="@Model.Soyad" class="form-control" />
+            <br />
+
+        </div>
+
+        <div class="tox-form__group">
+            <label>Kullanıcı Adı</label>
+            <input type="text" name="KullaniciAd" value="@Model.KullaniciAd" class="form-control" />
+            <br />
+
+        </div>
+
+        <div class="tox-form__group">
+            <label>Email</label>
+            <input type="text" name="Email" value="@Model.Email" class="form-control" />
+            <br />
+
+        </div>
+
+        <div class="tox-form__group">
+            <label>Şifre</label>
+            <input type="text" name="Sifre" value="@Model.Sifre" class="form-control" />
+            <br />
+
+        </div>
+
+        <div class="tox-form__group">
+            <label>Şifre Tekrar</label>
+            <input type="text" name="SifreTekrar" value="@Model.SifreTekrar" class="form-control" />
+            <br />
+
+        </div>
+        <button type="submit" class="btn btn-primary">Guncelle</button>
+
+    </div>
+</form>
