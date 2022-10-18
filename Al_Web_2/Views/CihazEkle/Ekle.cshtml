@@ -4,12 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/jQueryMultiSelectDropdown/css/bootstrap-3.1.1.min.css" type="text/css" />
-<link rel="stylesheet" href="~/jQueryMultiSelectDropdown/css/bootstrap-multiselect.css" type="text/css" />
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.8.2.js"></script>
-<script type="text/javascript" src="~/jQueryMultiSelectDropdown/js/bootstrap-2.3.2.min.js"></script>
-<script type="text/javascript" src="~/jQueryMultiSelectDropdown/js/bootstrap-multiselect.js"></script>
 
 @using (Html.BeginForm("Ekle", "CihazEkle", FormMethod.Post))
 {
@@ -53,6 +48,31 @@
 
                             }
                         }
+
+                    </select>
+                </div>
+
+                <div class="tox-form-group--maximize" style="margin-top:30px;">
+                    <label>Firma</label>
+                    @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
+
+                    <br />
+                    <select class="form-control" id="FirmaEkle" name="SirketEkle" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')">
+
+                        @for (int i = 0; i < ViewBag.frm.Count; i++)
+                        {
+                            if (ViewBag.frm[i].Selected == true)
+                            {
+                                <option selected value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
+
+                            }
+                            else
+                            {
+                                <option value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
+
+                            }
+                        }
+
 
                     </select>
                 </div>

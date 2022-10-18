@@ -1,4 +1,5 @@
 ﻿using Al_Web_2.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -13,7 +14,7 @@ namespace Al_Web_2.Controllers
 
         public ActionResult Index()
         {
-            var list = db.CihazEkle.Where(x => x.Silindi == false).ToList();
+            var list = db.CihazEkle.Include("SirketEkle").Where(x => x.Silindi == false).ToList();
             return View(list);
         }
         [HttpPost]
@@ -27,7 +28,7 @@ namespace Al_Web_2.Controllers
                     var cihaz = db.CihazEkle.Find(int.Parse(id));
 
                     cihaz.Silindi = true;
-                   cihaz.Kullanicilar.Clear();
+                    cihaz.Kullanicilar.Clear();
 
                     //db.CihazEkle.Remove(cihaz);
                 }
@@ -48,11 +49,19 @@ namespace Al_Web_2.Controllers
                                            }).ToList();
 
             ViewBag.kllnc = deger1;
+
+            List<SelectListItem> deger2 = (from x in db.SirketEkle.ToList()
+                                           select new SelectListItem
+                                           {
+                                               Text = x.SirketIsim,
+                                               Value = x.Id.ToString()
+                                           }).ToList();
+            ViewBag.frm = deger2;
             return View();
         }
 
         [HttpPost]
-        public ActionResult Ekle(CihazEkle Data, List<string> Kullanicilar)
+        public ActionResult Ekle(CihazEkle Data, List<string> Kullanicilar, FormCollection frm)
         {
             if (Kullanicilar != null)
             {
@@ -74,6 +83,16 @@ namespace Al_Web_2.Controllers
                 }
 
             }
+            if (frm["SirketEkle"] != null)
+            {
+                //Data.SirketEkleId = Convert.ToInt16(frm["FirmaEkle"].ToString());
+
+                int firmaId = Convert.ToInt16(frm["SirketEkle"].ToString());
+                var sirket = db.SirketEkle.Where(x => x.Id == firmaId).FirstOrDefault();
+
+                Data.SirketEkle = sirket;
+
+            }
             Data.Silindi = false;
             db.CihazEkle.Add(Data);
             db.SaveChanges();
@@ -93,7 +112,7 @@ namespace Al_Web_2.Controllers
 
         public ActionResult Guncelle(int id)
         {
-            var cihaz = db.CihazEkle.Where(x => x.Id == id).FirstOrDefault();
+            var cihaz = db.CihazEkle.Include("SirketEkle").Where(x => x.Id == id).FirstOrDefault();
 
             List<SelectListItem> deger1 = (from x in db.Kullanicilars.Where(x => x.Rol != "A").ToList()
                                            select new SelectListItem
@@ -108,10 +127,19 @@ namespace Al_Web_2.Controllers
                 deger1.Where(x => x.Value == kullanici.Id.ToString()).FirstOrDefault().Selected = true;
             }
             ViewBag.kllnc = deger1;
+
+            List<SelectListItem> deger2 = (from x in db.SirketEkle.ToList()
+                                           select new SelectListItem
+                                           {
+                                               Text = x.SirketIsim,
+                                               Value = x.Id.ToString()
+                                           }).ToList();
+
+            ViewBag.frm = deger2;
             return View(cihaz);
         }
         [HttpPost]
-        public ActionResult Guncelle(CihazEkle model, List<string> Kullanicilar)
+        public ActionResult Guncelle(CihazEkle model, List<string> Kullanicilar, FormCollection frm)
         {
             if (Kullanicilar != null)
             {
@@ -135,10 +163,22 @@ namespace Al_Web_2.Controllers
                     //model.Kullanicilar.Add(kullanici);
                 }
             }
+            if (frm["SirketEkle"] != null)
+            {
+                //Data.SirketEkleId = Convert.ToInt16(frm["FirmaEkle"].ToString());
+
+                int firmaId = Convert.ToInt16(frm["SirketEkle"].ToString());
+                var sirket = db.SirketEkle.Where(x => x.Id == firmaId).FirstOrDefault();
+
+                model.SirketEkle = sirket;
+
+            }
+
             var cihaz = db.CihazEkle.Find(model.Id);
             cihaz.CihazAd = model.CihazAd;
             cihaz.CihazSeriNo = model.CihazSeriNo;
             cihaz.SimCard = model.SimCard;
+            cihaz.SirketEkle = model.SirketEkle;
             cihaz.Kullanicilar.Clear();
             cihaz.Kullanicilar = model.Kullanicilar;
 

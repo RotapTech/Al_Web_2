@@ -4,12 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/jQueryMultiSelectDropdown/css/bootstrap-3.1.1.min.css" type="text/css" />
-<link rel="stylesheet" href="~/jQueryMultiSelectDropdown/css/bootstrap-multiselect.css" type="text/css" />
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.8.2.js"></script>
-<script type="text/javascript" src="~/jQueryMultiSelectDropdown/js/bootstrap-2.3.2.min.js"></script>
-<script type="text/javascript" src="~/jQueryMultiSelectDropdown/js/bootstrap-multiselect.js"></script>
 
 <br />
 
@@ -23,7 +17,7 @@
                     <input type="text" name="SirketIsim" class="form-control" value="@Model.SirketIsim" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
                 </div>
 
-                <div class="tox-form-group--maximize" style="margin-top:30px;" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')">
+                <div class="tox-form-group--maximize" style="margin-top:30px;">
                     <label>Kullanıcı</label>
                     <br />
                     @*@Html.ListBoxFor(x => x.Kullanicilar, (List<SelectListItem>)ViewBag.kllnc, new { @class = "form-control" })*@

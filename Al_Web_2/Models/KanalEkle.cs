@@ -23,7 +23,9 @@ namespace Al_Web_2.Models
         public string Name { get; set; }
         public string Type { get; set; }
         public Nullable<bool> Silindi { get; set; }
+        public Nullable<int> SirketEkleId { get; set; }
     
+        public virtual SirketEkle SirketEkle { get; set; }
         public virtual ICollection<Kullanicilar> Kullanicilar { get; set; }
     }
 }

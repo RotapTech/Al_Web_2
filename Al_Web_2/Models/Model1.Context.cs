@@ -25,10 +25,10 @@ namespace Al_Web_2.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<CihazEkle> CihazEkle { get; set; }
-        public DbSet<KanalEkle> KanalEkles { get; set; }
         public DbSet<sysdiagrams> sysdiagrams { get; set; }
         public DbSet<SirketEkle> SirketEkle { get; set; }
         public DbSet<Kullanicilar> Kullanicilars { get; set; }
+        public DbSet<CihazEkle> CihazEkle { get; set; }
+        public DbSet<KanalEkle> KanalEkles { get; set; }
     }
 }

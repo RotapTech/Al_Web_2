@@ -4,13 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e851434c10d54b5e92b5383f76570e3e" Name="Diagram1">
-        <EntityTypeShape EntityType="Al_WebModel.CihazEkle" Width="1.5" PointX="7" PointY="0.5" />
-        <EntityTypeShape EntityType="Al_WebModel.KanalEkle" Width="1.5" PointX="0.75" PointY="1.75" />
-        <EntityTypeShape EntityType="Al_WebModel.sysdiagrams" Width="1.5" PointX="12.375" PointY="1.75" />
-        <EntityTypeShape EntityType="Al_WebModel.SirketEkle" Width="1.5" PointX="0.75" PointY="5.875" />
-        <EntityTypeShape EntityType="Al_WebModel.Kullanicilar" Width="1.5" PointX="9.25" PointY="2.375" />
+      <Diagram DiagramId="e851434c10d54b5e92b5383f76570e3e" Name="Diagram1" ZoomLevel="103">
+        <EntityTypeShape EntityType="Al_WebModel.sysdiagrams" Width="1.5" PointX="15.125" PointY="0.875" />
+        <EntityTypeShape EntityType="Al_WebModel.SirketEkle" Width="1.5" PointX="0.5" PointY="4.875" />
+        <EntityTypeShape EntityType="Al_WebModel.Kullanicilar" Width="1.5" PointX="7.5" PointY="1" />
         <AssociationConnector Association="Al_WebModel.FK_Kullanicilar_SirketEkle" />
+        <EntityTypeShape EntityType="Al_WebModel.CihazEkle" Width="1.5" PointX="2.75" PointY="3.125" />
+        <EntityTypeShape EntityType="Al_WebModel.KanalEkle" Width="1.5" PointX="2.75" PointY="6.375" />
+        <AssociationConnector Association="Al_WebModel.FK_CihazEkle_SirketEkle" />
+        <AssociationConnector Association="Al_WebModel.FK_KanalEkle_SirketEkle" />
         <AssociationConnector Association="Al_WebModel.tblKul_Cihaz" />
         <AssociationConnector Association="Al_WebModel.tblKul_Kanal" />
       </Diagram>

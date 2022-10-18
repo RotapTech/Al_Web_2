@@ -4,12 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/jQueryMultiSelectDropdown/css/bootstrap-3.1.1.min.css" type="text/css" />
-<link rel="stylesheet" href="~/jQueryMultiSelectDropdown/css/bootstrap-multiselect.css" type="text/css" />
-
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.8.2.js"></script>
-<script type="text/javascript" src="~/jQueryMultiSelectDropdown/js/bootstrap-2.3.2.min.js"></script>
-<script type="text/javascript" src="~/jQueryMultiSelectDropdown/js/bootstrap-multiselect.js"></script>
 
 <br />
 <div class="container">
@@ -17,22 +11,22 @@
         <div class="col-md-4">
             <form method="post" enctype="multipart/form-data">
 
-                <div class="tox-form-group--maximize"style="margin-top:30px;" >
+                <div class="tox-form-group--maximize" style="margin-top:30px;">
                     <label>Cihaz Ad</label>
                     <input type="text" name="CihazAd" class="form-control" value="@Model.CihazAd" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
                 </div>
-       
-                <div class="tox-form-group--maximize"style="margin-top:30px;">
+
+                <div class="tox-form-group--maximize" style="margin-top:30px;">
                     <label>Cihaz Seri-No</label>
-                    <input type="text" name="CihazSeriNo" class="form-control" value="@Model.CihazSeriNo" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')"/>
+                    <input type="text" name="CihazSeriNo" class="form-control" value="@Model.CihazSeriNo" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
                 </div>
-    
-                <div class="tox-form-group--maximize"style="margin-top:30px;">
+
+                <div class="tox-form-group--maximize" style="margin-top:30px;">
                     <label>Sim Kart</label>
-                    <input type="text" name="SimCard" class="form-control" value="@Model.SimCard" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')"/>
+                    <input type="text" name="SimCard" class="form-control" value="@Model.SimCard" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
                 </div>
-            
-                <div class="tox-form-group--maximize"style="margin-top:30px;">
+
+                <div class="tox-form-group--maximize" style="margin-top:30px;">
                     <label>Kullanıcı</label>
                     <br />
 
@@ -58,6 +52,31 @@
 
                     </select>
 
+                </div>
+
+                <div class="tox-form-group--maximize" style="margin-top:30px;">
+                    <label>Firma</label>
+                    @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
+
+                    <br />
+                    <select class="form-control" id="FirmaEkle" name="SirketEkle" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')">
+
+                        @for (int i = 0; i < ViewBag.frm.Count; i++)
+                        {
+                            if (ViewBag.frm[i].Selected == true)
+                            {
+                                <option selected value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
+
+                            }
+                            else
+                            {
+                                <option value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
+
+                            }
+                        }
+
+
+                    </select>
                 </div>
 
                 <br />

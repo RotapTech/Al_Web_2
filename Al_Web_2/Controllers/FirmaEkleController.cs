@@ -1,8 +1,6 @@
 ﻿using Al_Web_2.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Al_Web_2.Controllers
@@ -101,7 +99,7 @@ namespace Al_Web_2.Controllers
         }
         public ActionResult Guncelle(int id)
         {
-            var sirket = db.SirketEkle.Where(x => x.Id == id).FirstOrDefault();
+            var sirket = db.SirketEkle.Include("Kullanicilar").Where(x => x.Id == id).FirstOrDefault();
 
 
             List<SelectListItem> firma = (from x in db.Kullanicilars.Where(x => x.Rol != "A").ToList()
@@ -146,6 +144,9 @@ namespace Al_Web_2.Controllers
             }
             var firma = db.SirketEkle.Find(model.Id);
             firma.SirketIsim = model.SirketIsim;
+          
+
+
             firma.Kullanicilar.Clear();
             firma.Kullanicilar = model.Kullanicilar;
 

@@ -164,6 +164,7 @@ namespace Al_Web_2.Controllers
                                               Text = x.Name + " " + x.Type,
                                               Value = x.Id.ToString()
                                           }).ToList();
+
             foreach (var kullanici in guncelle.KanalEkle)
             {
                 deger.Where(x => x.Value == kullanici.Id.ToString()).FirstOrDefault().Selected = true;
@@ -193,12 +194,7 @@ namespace Al_Web_2.Controllers
                                                Value = x.Id.ToString()
                                            }).ToList();
 
-                           
-            
-
             ViewBag.frm = deger2;
-
-
 
             return View(guncelle);
         }

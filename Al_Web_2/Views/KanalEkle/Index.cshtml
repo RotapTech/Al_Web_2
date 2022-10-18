@@ -5,7 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div>
+<div style="max-width: 90% !important; position: relative; margin: auto;">
+
     <a href="/KanalEkle/Ekle" class="btn btn-primary">Kanal Ekle</a>
     <br />
     <br />
@@ -19,11 +20,12 @@
                     {
                         <th><input type="checkbox" id="checkBoxAll" /></th>
 
-                        <th style="width: 100px;">Kanal İsim</th>
-                        <th style="width: 100px;">Kanal Tip</th>
+                        <th>Kanal İsim</th>
+                        <th>Kanal Tip</th>
                         <th>Kullanıcı</th>
-                        <th style="width: 100px;">Sil</th>
-                        <th style="width: 150px;">Güncelle</th>
+                        <th>Firma</th>
+                        <th>Sil</th>
+                        <th>Güncelle</th>
                     }
 
                 </tr>
@@ -31,30 +33,33 @@
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td><input type="checkbox" class="checkbox" value="@item.Id" name="kanalId" /></td>
+        <tr>
+            <td><input type="checkbox" class="checkbox" value="@item.Id" name="kanalId" /></td>
 
-                    <td>@item.Name</td>
-                    <td>@item.Type</td>
-                    <td>
-                        <div style='padding: 3px; width:300px; word-break: break-all; word-wrap: break-word; max-width: 100%; height: 80px; overflow: auto;'>
+            <td>@item.Name</td>
+            <td>@item.Type</td>
+            <td>
+                <div style='padding: 3px; width:300px; word-break: break-all; word-wrap: break-word; max-width: 100%; height: 80px; overflow: auto;'>
 
-                            @foreach (var itemk in item.Kullanicilar)
-                            {
-                                <span style="margin-bottom:7px;">@($"{itemk.Ad} {itemk.Soyad}")<br /></span>
-                            }
-                        </div>
-
-                    </td>
-
-                    @if (User.IsInRole("A"))
+                    @foreach (var itemk in item.Kullanicilar)
                     {
-                        <td>@Html.ActionLink("Sil", "Sil", new { id = item.Id }, new { @class = "btn btn-primary", onclick = "return confirm('Silmek İstiyor Musunuz ?')" })</td>
-                        <td><a href="/KanalEkle/Guncelle/@item.Id" class="btn btn-primary">Güncelle</a></td>
+                        <span style="margin-bottom:7px;">@($"{itemk.Ad} {itemk.Soyad}")<br /></span>
                     }
+                </div>
+
+            </td>  
+            <td>@(item.SirketEkle?.SirketIsim)</td>
+            @*<td>@(item.Kullanicilar[0]. .SirketEkle?.SirketIsim)</td>*@
 
 
-                </tr>
+            @if (User.IsInRole("A"))
+            {
+                <td>@Html.ActionLink("Sil", "Sil", new { id = item.Id }, new { @class = "btn btn-primary", onclick = "return confirm('Silmek İstiyor Musunuz ?')" })</td>
+                <td><a href="/KanalEkle/Guncelle/@item.Id" class="btn btn-primary">Güncelle</a></td>
+            }
+
+
+        </tr>
             }
         </table>
 

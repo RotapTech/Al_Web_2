@@ -1,4 +1,5 @@
 ﻿using Al_Web_2.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -12,7 +13,9 @@ namespace Al_Web_2.Controllers
         Al_WebEntities db = new Al_WebEntities();
         public ActionResult Index()
         {
-            var list = db.KanalEkles.Where(x => x.Silindi == false).ToList();
+            var list = db.KanalEkles.Include("SirketEkle").Where(x => x.Silindi == false).ToList();
+
+            
             return View(list);
         }
         [HttpPost]
@@ -25,8 +28,10 @@ namespace Al_Web_2.Controllers
                 {
                     var kanal = db.KanalEkles.Find(int.Parse(id));
 
+                   
                     kanal.Silindi = true;
                     kanal.Kullanicilar.Clear();
+                    
 
                     //db.KanalEkles.Remove(kanal);
                 }
@@ -46,12 +51,22 @@ namespace Al_Web_2.Controllers
                                                Value = x.Id.ToString()
                                            }).ToList();
             ViewBag.kllnc = deger1;
+
+            List<SelectListItem> deger2 = (from x in db.SirketEkle.ToList()
+                                           select new SelectListItem
+                                           {
+                                               Text = x.SirketIsim,
+                                               Value = x.Id.ToString()
+                                           }).ToList();
+            ViewBag.frm = deger2;
+
             return View();
 
         }
 
+
         [HttpPost]
-        public ActionResult Ekle(KanalEkle Data, List<string> Kullanicilar)
+        public ActionResult Ekle(KanalEkle Data, List<string> Kullanicilar, FormCollection frm)
         {
 
             if (Kullanicilar != null)
@@ -75,6 +90,16 @@ namespace Al_Web_2.Controllers
 
                 }
             }
+            if (frm["SirketEkle"] != null)
+            {
+                //Data.SirketEkleId = Convert.ToInt16(frm["FirmaEkle"].ToString());
+
+                int firmaId = Convert.ToInt16(frm["SirketEkle"].ToString());
+                var sirket = db.SirketEkle.Where(x => x.Id == firmaId).FirstOrDefault();
+
+                Data.SirketEkle = sirket;
+
+            }
 
             Data.Silindi = false;
             db.KanalEkles.Add(Data);
@@ -96,7 +121,7 @@ namespace Al_Web_2.Controllers
         }
         public ActionResult Guncelle(int id)
         {
-            var kanal = db.KanalEkles.Where(x => x.Id == id).FirstOrDefault();
+            var kanal = db.KanalEkles.Include("SirketEkle").Where(x => x.Id == id).FirstOrDefault();
 
 
             List<SelectListItem> deger1 = (from x in db.Kullanicilars.Where(x => x.Rol != "A").ToList()
@@ -114,11 +139,21 @@ namespace Al_Web_2.Controllers
                 deger1.Where(x => x.Value == kullanici.Id.ToString()).FirstOrDefault().Selected = true;
             }
             ViewBag.kllnc = deger1;
+
+            List<SelectListItem> deger2 = (from x in db.SirketEkle.ToList()
+                                           select new SelectListItem
+                                           {
+                                               Text = x.SirketIsim,
+                                               Value = x.Id.ToString()
+                                           }).ToList();
+
+            ViewBag.frm = deger2;
+
             return View(kanal);
         }
 
         [HttpPost]
-        public ActionResult Guncelle(KanalEkle model, List<string> Kullanicilar)
+        public ActionResult Guncelle(KanalEkle model, List<string> Kullanicilar, FormCollection frm)
         {
             if (Kullanicilar != null)
             {
@@ -154,9 +189,23 @@ namespace Al_Web_2.Controllers
 
                 }
             }
+
+            if (frm["SirketEkle"] != null)
+            {
+                //Data.SirketEkleId = Convert.ToInt16(frm["FirmaEkle"].ToString());
+
+                int firmaId = Convert.ToInt16(frm["SirketEkle"].ToString());
+                var sirket = db.SirketEkle.Where(x => x.Id == firmaId).FirstOrDefault();
+
+                model.SirketEkle = sirket;
+
+            }
+
+
             var kanal = db.KanalEkles.Find(model.Id);
             kanal.Name = model.Name;
             kanal.Type = model.Type;
+            kanal.SirketEkle = model.SirketEkle;
             kanal.Kullanicilar.Clear();
             kanal.Kullanicilar = model.Kullanicilar;
 
