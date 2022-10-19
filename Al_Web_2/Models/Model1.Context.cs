@@ -13,10 +13,10 @@ namespace Al_Web_2.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Al_WebEntities : DbContext
+    public partial class Al_WebEntities1 : DbContext
     {
-        public Al_WebEntities()
-            : base("name=Al_WebEntities")
+        public Al_WebEntities1()
+            : base("name=Al_WebEntities1")
         {
         }
     
@@ -25,10 +25,10 @@ namespace Al_Web_2.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<sysdiagrams> sysdiagrams { get; set; }
-        public DbSet<SirketEkle> SirketEkle { get; set; }
-        public DbSet<Kullanicilar> Kullanicilars { get; set; }
         public DbSet<CihazEkle> CihazEkle { get; set; }
-        public DbSet<KanalEkle> KanalEkles { get; set; }
+        public DbSet<KanalEkle> KanalEkle { get; set; }
+        public DbSet<Kullanicilar> Kullanicilar { get; set; }
+        public DbSet<SirketEkle> SirketEkle { get; set; }
+        public DbSet<sysdiagram> sysdiagram { get; set; }
     }
 }

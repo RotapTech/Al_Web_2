@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@(ViewBag.Error)
 
 
 @using (Html.BeginForm("Ekle", "KanalEkle", FormMethod.Post))
@@ -55,7 +56,7 @@
                     @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
 
                     <br />
-                    <select class="form-control" id="FirmaEkle" name="SirketEkle" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')">
+                    <select class="form-control" id="FirmaEkle" name="SirketEkle" multiple="multiple">
 
                         @for (int i = 0; i < ViewBag.frm.Count; i++)
                         {
@@ -88,6 +89,9 @@
 <script type="text/javascript">
     $(function () {
         $('#kullanicilar').multiselect({
+            includeSelectAllOption: true
+        });
+        $('#FirmaEkle').multiselect({
             includeSelectAllOption: true
         });
     });

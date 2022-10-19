@@ -10,11 +10,23 @@ namespace Al_Web_2.Controllers
     public class FirmaEkleController : Controller
     {
         // GET: FirmaEkle
-        Al_WebEntities db = new Al_WebEntities();
+        Al_WebEntities1 db = new Al_WebEntities1();
 
         public ActionResult Index()
         {
             var list = db.SirketEkle.Where(x => x.Silindi == false).ToList();
+
+            foreach (var item in list)
+            {
+                foreach (var items in item.Kullanicilars.ToList())
+                {
+                    if (items.Silindi == true)
+                    {
+                        item.Kullanicilars.Remove(items);
+                    }
+                }
+            }
+
             return View(list);
         }
         [HttpPost]
@@ -28,7 +40,7 @@ namespace Al_Web_2.Controllers
                     var firma = db.SirketEkle.Find(int.Parse(id));
 
                     firma.Silindi = true;
-                    firma.Kullanicilar.Clear();
+                    firma.Kullanicilars.Clear();
 
                     //db.SirketEkle.Remove(firma);
                 }
@@ -41,13 +53,14 @@ namespace Al_Web_2.Controllers
 
         public ActionResult Ekle()
         {
-            List<SelectListItem> firma = (from x in db.Kullanicilars.Where(x => x.Rol != "A").ToList()
-                                           select new SelectListItem
-                                           {
-                                               Text = x.Ad + " " + x.Soyad,
-                                               Value = x.Id.ToString()
-                                           }).ToList();
-            ViewBag.kllnc= firma;
+            List<SelectListItem> firma = (from x in db.Kullanicilar.Where(x => x.Rol != "A" && x.Silindi == false).ToList()
+                                          select new SelectListItem
+                                          {
+                                              Text = x.Ad + " " + x.Soyad,
+                                              Value = x.Id.ToString()
+                                          }).ToList();
+            ViewBag.Error = TempData["Error"];
+            ViewBag.kllnc = firma;
             return View();
         }
 
@@ -66,8 +79,8 @@ namespace Al_Web_2.Controllers
 
                     if (success)
                     {
-                        var kullanici = db.Kullanicilars.Where(x => x.Id == kullaniciId).FirstOrDefault();
-                        Data.Kullanicilar.Add(kullanici);
+                        var kullanici = db.Kullanicilar.Where(x => x.Id == kullaniciId).FirstOrDefault();
+                        Data.Kullanicilars.Add(kullanici);
                     }
                     else
                     {
@@ -79,7 +92,19 @@ namespace Al_Web_2.Controllers
 
             Data.Silindi = false;
             db.SirketEkle.Add(Data);
-            db.SaveChanges();
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (System.Exception)
+            {
+
+                TempData["Error"] = "Aynı isim var!";
+
+                return RedirectToAction("Ekle");
+            }
+
 
             return RedirectToAction("Index");
 
@@ -90,33 +115,33 @@ namespace Al_Web_2.Controllers
             var sirket = db.SirketEkle.Where(x => x.Id == id).FirstOrDefault();
 
             sirket.Silindi = true;
-            sirket.Kullanicilar.Clear();
+            sirket.Kullanicilars.Clear();
 
-           
+
             //db.SirketEkle.Remove(sirket);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
         public ActionResult Guncelle(int id)
         {
-            var sirket = db.SirketEkle.Include("Kullanicilar").Where(x => x.Id == id).FirstOrDefault();
+            var sirket = db.SirketEkle.Where(x => x.Id == id).FirstOrDefault();
 
 
-            List<SelectListItem> firma = (from x in db.Kullanicilars.Where(x => x.Rol != "A").ToList()
-                                           select new SelectListItem
-                                           {
-                                               Text = x.Ad + " " + x.Soyad,
-                                               Value = x.Id.ToString(),
-                                               //Selected = int.Equals(x.Id, id)
+            List<SelectListItem> Kullanicilar = (from x in db.Kullanicilar.Where(x => x.Rol != "A" && x.Silindi == false).ToList()
+                                                 select new SelectListItem
+                                                 {
+                                                     Text = x.Ad + " " + x.Soyad,
+                                                     Value = x.Id.ToString(),
+                                                     //Selected = int.Equals(x.Id, id)
 
-                                           }).ToList();
+                                                 }).ToList();
 
 
-            foreach (var kullanici in sirket.Kullanicilar)
+            foreach (var kullanici in sirket.Kullanicilars)
             {
-                firma.Where(x => x.Value == kullanici.Id.ToString()).FirstOrDefault().Selected = true;
+                Kullanicilar.Where(x => x.Value == kullanici.Id.ToString()).FirstOrDefault().Selected = true;
             }
-            ViewBag.kllnc = firma;
+            ViewBag.kllnc = Kullanicilar;
             return View(sirket);
         }
 
@@ -133,8 +158,8 @@ namespace Al_Web_2.Controllers
 
                     if (success)
                     {
-                        var kullanici = db.Kullanicilars.Where(x => x.Id == kullaniciId).FirstOrDefault();
-                        model.Kullanicilar.Add(kullanici);
+                        var kullanici = db.Kullanicilar.Where(x => x.Id == kullaniciId).FirstOrDefault();
+                        model.Kullanicilars.Add(kullanici);
                     }
                     else
                     {
@@ -144,11 +169,11 @@ namespace Al_Web_2.Controllers
             }
             var firma = db.SirketEkle.Find(model.Id);
             firma.SirketIsim = model.SirketIsim;
-          
 
 
-            firma.Kullanicilar.Clear();
-            firma.Kullanicilar = model.Kullanicilar;
+
+            firma.Kullanicilars.Clear();
+            firma.Kullanicilars = model.Kullanicilars;
 
 
             db.SaveChanges();

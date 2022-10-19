@@ -59,7 +59,7 @@
                     @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
 
                     <br />
-                    <select class="form-control" id="FirmaEkle" name="SirketEkle" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')">
+                    <select class="form-control" id="FirmaEkle" name="SirketEkle" multiple="multiple">
 
                         @for (int i = 0; i < ViewBag.frm.Count; i++)
                         {
@@ -94,6 +94,11 @@
     $(function () {
         $('#Kullanicilar').multiselect({
             includeSelectAllOption: true
+        });
+        $(function () {
+            $('#FirmaEkle').multiselect({
+                includeSelectAllOption: true
+            });
         });
     });
 </script>

@@ -14,7 +14,6 @@
           <Property Name="CihazSeriNo" Type="nvarchar" MaxLength="50" />
           <Property Name="SimCard" Type="nvarchar" MaxLength="50" />
           <Property Name="Silindi" Type="bit" />
-          <Property Name="SirketEkleId" Type="int" />
         </EntityType>
         <EntityType Name="KanalEkle">
           <Key>
@@ -24,7 +23,6 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Type" Type="nvarchar" MaxLength="50" />
           <Property Name="Silindi" Type="bit" />
-          <Property Name="SirketEkleId" Type="int" />
         </EntityType>
         <EntityType Name="Kullanicilar">
           <Key>
@@ -59,6 +57,22 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="tbl_cihaz_firma">
+          <Key>
+            <PropertyRef Name="SirketId" />
+            <PropertyRef Name="CihazId" />
+          </Key>
+          <Property Name="SirketId" Type="int" Nullable="false" />
+          <Property Name="CihazId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_kanal_sirket">
+          <Key>
+            <PropertyRef Name="SirketEkleId" />
+            <PropertyRef Name="KanalEkleId" />
+          </Key>
+          <Property Name="SirketEkleId" Type="int" Nullable="false" />
+          <Property Name="KanalEkleId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblKul_Cihaz">
           <Key>
             <PropertyRef Name="KullaniciId" />
@@ -75,30 +89,6 @@
           <Property Name="KullaniciId" Type="int" Nullable="false" />
           <Property Name="KanalId" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK_CihazEkle_SirketEkle">
-          <End Role="SirketEkle" Type="Self.SirketEkle" Multiplicity="0..1" />
-          <End Role="CihazEkle" Type="Self.CihazEkle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SirketEkle">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CihazEkle">
-              <PropertyRef Name="SirketEkleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_KanalEkle_SirketEkle">
-          <End Role="SirketEkle" Type="Self.SirketEkle" Multiplicity="0..1" />
-          <End Role="KanalEkle" Type="Self.KanalEkle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SirketEkle">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="KanalEkle">
-              <PropertyRef Name="SirketEkleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Kullanicilar_SirketEkle">
           <End Role="SirketEkle" Type="Self.SirketEkle" Multiplicity="0..1" />
           <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="*" />
@@ -107,6 +97,54 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Kullanicilar">
+              <PropertyRef Name="SirketEkleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_cihaz_firma_CihazEkle">
+          <End Role="CihazEkle" Type="Self.CihazEkle" Multiplicity="1" />
+          <End Role="tbl_cihaz_firma" Type="Self.tbl_cihaz_firma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CihazEkle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_cihaz_firma">
+              <PropertyRef Name="CihazId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_cihaz_firma_SirketEkle">
+          <End Role="SirketEkle" Type="Self.SirketEkle" Multiplicity="1" />
+          <End Role="tbl_cihaz_firma" Type="Self.tbl_cihaz_firma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SirketEkle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_cihaz_firma">
+              <PropertyRef Name="SirketId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_kanal_sirket_KanalEkle">
+          <End Role="KanalEkle" Type="Self.KanalEkle" Multiplicity="1" />
+          <End Role="tbl_kanal_sirket" Type="Self.tbl_kanal_sirket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KanalEkle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_kanal_sirket">
+              <PropertyRef Name="KanalEkleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_kanal_sirket_SirketEkle">
+          <End Role="SirketEkle" Type="Self.SirketEkle" Multiplicity="1" />
+          <End Role="tbl_kanal_sirket" Type="Self.tbl_kanal_sirket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SirketEkle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="tbl_kanal_sirket">
               <PropertyRef Name="SirketEkleId" />
             </Dependent>
           </ReferentialConstraint>
@@ -165,19 +203,29 @@
           <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SirketEkle" EntityType="Self.SirketEkle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_cihaz_firma" EntityType="Self.tbl_cihaz_firma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_kanal_sirket" EntityType="Self.tbl_kanal_sirket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblKul_Cihaz" EntityType="Self.tblKul_Cihaz" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblKul_Kanal" EntityType="Self.tblKul_Kanal" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_CihazEkle_SirketEkle" Association="Self.FK_CihazEkle_SirketEkle">
-            <End Role="SirketEkle" EntitySet="SirketEkle" />
-            <End Role="CihazEkle" EntitySet="CihazEkle" />
-          </AssociationSet>
-          <AssociationSet Name="FK_KanalEkle_SirketEkle" Association="Self.FK_KanalEkle_SirketEkle">
-            <End Role="SirketEkle" EntitySet="SirketEkle" />
-            <End Role="KanalEkle" EntitySet="KanalEkle" />
-          </AssociationSet>
           <AssociationSet Name="FK_Kullanicilar_SirketEkle" Association="Self.FK_Kullanicilar_SirketEkle">
             <End Role="SirketEkle" EntitySet="SirketEkle" />
             <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_cihaz_firma_CihazEkle" Association="Self.FK_tbl_cihaz_firma_CihazEkle">
+            <End Role="CihazEkle" EntitySet="CihazEkle" />
+            <End Role="tbl_cihaz_firma" EntitySet="tbl_cihaz_firma" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_cihaz_firma_SirketEkle" Association="Self.FK_tbl_cihaz_firma_SirketEkle">
+            <End Role="SirketEkle" EntitySet="SirketEkle" />
+            <End Role="tbl_cihaz_firma" EntitySet="tbl_cihaz_firma" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_kanal_sirket_KanalEkle" Association="Self.FK_tbl_kanal_sirket_KanalEkle">
+            <End Role="KanalEkle" EntitySet="KanalEkle" />
+            <End Role="tbl_kanal_sirket" EntitySet="tbl_kanal_sirket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_kanal_sirket_SirketEkle" Association="Self.FK_tbl_kanal_sirket_SirketEkle">
+            <End Role="SirketEkle" EntitySet="SirketEkle" />
+            <End Role="tbl_kanal_sirket" EntitySet="tbl_kanal_sirket" />
           </AssociationSet>
           <AssociationSet Name="FK_tblKul_Cihaz_CihazEkle" Association="Self.FK_tblKul_Cihaz_CihazEkle">
             <End Role="CihazEkle" EntitySet="CihazEkle" />
@@ -200,53 +248,55 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Al_WebModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="Al_WebEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="sysdiagrams" EntityType="Al_WebModel.sysdiagrams" />
-          <EntitySet Name="SirketEkle" EntityType="Al_WebModel.SirketEkle" />
-          <EntitySet Name="Kullanicilar" EntityType="Al_WebModel.Kullanicilar" />
+        <EntityContainer Name="Al_WebEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CihazEkles" EntityType="Al_WebModel.CihazEkle" />
+          <EntitySet Name="KanalEkles" EntityType="Al_WebModel.KanalEkle" />
+          <EntitySet Name="Kullanicilars" EntityType="Al_WebModel.Kullanicilar" />
+          <EntitySet Name="SirketEkles" EntityType="Al_WebModel.SirketEkle" />
+          <EntitySet Name="sysdiagrams" EntityType="Al_WebModel.sysdiagram" />
           <AssociationSet Name="FK_Kullanicilar_SirketEkle" Association="Al_WebModel.FK_Kullanicilar_SirketEkle">
-            <End Role="SirketEkle" EntitySet="SirketEkle" />
-            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="SirketEkle" EntitySet="SirketEkles" />
+            <End Role="Kullanicilar" EntitySet="Kullanicilars" />
           </AssociationSet>
-          <EntitySet Name="CihazEkle" EntityType="Al_WebModel.CihazEkle" />
-          <EntitySet Name="KanalEkle" EntityType="Al_WebModel.KanalEkle" />
-          <AssociationSet Name="FK_CihazEkle_SirketEkle" Association="Al_WebModel.FK_CihazEkle_SirketEkle">
-            <End Role="SirketEkle" EntitySet="SirketEkle" />
-            <End Role="CihazEkle" EntitySet="CihazEkle" />
+          <AssociationSet Name="tbl_cihaz_firma" Association="Al_WebModel.tbl_cihaz_firma">
+            <End Role="CihazEkle" EntitySet="CihazEkles" />
+            <End Role="SirketEkle" EntitySet="SirketEkles" />
           </AssociationSet>
-          <AssociationSet Name="FK_KanalEkle_SirketEkle" Association="Al_WebModel.FK_KanalEkle_SirketEkle">
-            <End Role="SirketEkle" EntitySet="SirketEkle" />
-            <End Role="KanalEkle" EntitySet="KanalEkle" />
+          <AssociationSet Name="tbl_kanal_sirket" Association="Al_WebModel.tbl_kanal_sirket">
+            <End Role="KanalEkle" EntitySet="KanalEkles" />
+            <End Role="SirketEkle" EntitySet="SirketEkles" />
           </AssociationSet>
           <AssociationSet Name="tblKul_Cihaz" Association="Al_WebModel.tblKul_Cihaz">
-            <End Role="CihazEkle" EntitySet="CihazEkle" />
-            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="CihazEkle" EntitySet="CihazEkles" />
+            <End Role="Kullanicilar" EntitySet="Kullanicilars" />
           </AssociationSet>
           <AssociationSet Name="tblKul_Kanal" Association="Al_WebModel.tblKul_Kanal">
-            <End Role="KanalEkle" EntitySet="KanalEkle" />
-            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="KanalEkle" EntitySet="KanalEkles" />
+            <End Role="Kullanicilar" EntitySet="Kullanicilars" />
           </AssociationSet>
-          </EntityContainer>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-        </EntityType>
-        <EntityType Name="SirketEkle">
+        </EntityContainer>
+        <EntityType Name="CihazEkle">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SirketIsim" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CihazAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CihazSeriNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SimCard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Silindi" Type="Boolean" />
-          <NavigationProperty Name="Kullanicilar" Relationship="Al_WebModel.FK_Kullanicilar_SirketEkle" FromRole="SirketEkle" ToRole="Kullanicilar" />
-          <NavigationProperty Name="CihazEkle" Relationship="Al_WebModel.FK_CihazEkle_SirketEkle" FromRole="SirketEkle" ToRole="CihazEkle" />
-          <NavigationProperty Name="KanalEkle" Relationship="Al_WebModel.FK_KanalEkle_SirketEkle" FromRole="SirketEkle" ToRole="KanalEkle" />
+          <NavigationProperty Name="SirketEkles" Relationship="Al_WebModel.tbl_cihaz_firma" FromRole="CihazEkle" ToRole="SirketEkle" />
+          <NavigationProperty Name="Kullanicilars" Relationship="Al_WebModel.tblKul_Cihaz" FromRole="CihazEkle" ToRole="Kullanicilar" />
+        </EntityType>
+        <EntityType Name="KanalEkle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Silindi" Type="Boolean" />
+          <NavigationProperty Name="SirketEkles" Relationship="Al_WebModel.tbl_kanal_sirket" FromRole="KanalEkle" ToRole="SirketEkle" />
+          <NavigationProperty Name="Kullanicilars" Relationship="Al_WebModel.tblKul_Kanal" FromRole="KanalEkle" ToRole="Kullanicilar" />
         </EntityType>
         <EntityType Name="Kullanicilar">
           <Key>
@@ -263,8 +313,29 @@
           <Property Name="SirketEkleId" Type="Int32" />
           <Property Name="Silindi" Type="Boolean" />
           <NavigationProperty Name="SirketEkle" Relationship="Al_WebModel.FK_Kullanicilar_SirketEkle" FromRole="Kullanicilar" ToRole="SirketEkle" />
-          <NavigationProperty Name="CihazEkle" Relationship="Al_WebModel.tblKul_Cihaz" FromRole="Kullanicilar" ToRole="CihazEkle" />
-          <NavigationProperty Name="KanalEkle" Relationship="Al_WebModel.tblKul_Kanal" FromRole="Kullanicilar" ToRole="KanalEkle" />
+          <NavigationProperty Name="CihazEkles" Relationship="Al_WebModel.tblKul_Cihaz" FromRole="Kullanicilar" ToRole="CihazEkle" />
+          <NavigationProperty Name="KanalEkles" Relationship="Al_WebModel.tblKul_Kanal" FromRole="Kullanicilar" ToRole="KanalEkle" />
+        </EntityType>
+        <EntityType Name="SirketEkle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SirketIsim" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Silindi" Type="Boolean" />
+          <NavigationProperty Name="Kullanicilars" Relationship="Al_WebModel.FK_Kullanicilar_SirketEkle" FromRole="SirketEkle" ToRole="Kullanicilar" />
+          <NavigationProperty Name="CihazEkles" Relationship="Al_WebModel.tbl_cihaz_firma" FromRole="SirketEkle" ToRole="CihazEkle" />
+          <NavigationProperty Name="KanalEkles" Relationship="Al_WebModel.tbl_kanal_sirket" FromRole="SirketEkle" ToRole="KanalEkle" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK_Kullanicilar_SirketEkle">
           <End Type="Al_WebModel.SirketEkle" Role="SirketEkle" Multiplicity="0..1" />
@@ -278,54 +349,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="CihazEkle">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CihazAd" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CihazSeriNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SimCard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Silindi" Type="Boolean" />
-          <Property Name="SirketEkleId" Type="Int32" />
-          <NavigationProperty Name="SirketEkle" Relationship="Al_WebModel.FK_CihazEkle_SirketEkle" FromRole="CihazEkle" ToRole="SirketEkle" />
-          <NavigationProperty Name="Kullanicilar" Relationship="Al_WebModel.tblKul_Cihaz" FromRole="CihazEkle" ToRole="Kullanicilar" />
-        </EntityType>
-        <EntityType Name="KanalEkle">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Silindi" Type="Boolean" />
-          <Property Name="SirketEkleId" Type="Int32" />
-          <NavigationProperty Name="SirketEkle" Relationship="Al_WebModel.FK_KanalEkle_SirketEkle" FromRole="KanalEkle" ToRole="SirketEkle" />
-          <NavigationProperty Name="Kullanicilar" Relationship="Al_WebModel.tblKul_Kanal" FromRole="KanalEkle" ToRole="Kullanicilar" />
-        </EntityType>
-        <Association Name="FK_CihazEkle_SirketEkle">
-          <End Type="Al_WebModel.SirketEkle" Role="SirketEkle" Multiplicity="0..1" />
+        <Association Name="tbl_cihaz_firma">
           <End Type="Al_WebModel.CihazEkle" Role="CihazEkle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SirketEkle">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CihazEkle">
-              <PropertyRef Name="SirketEkleId" />
-            </Dependent>
-          </ReferentialConstraint>
+          <End Type="Al_WebModel.SirketEkle" Role="SirketEkle" Multiplicity="*" />
         </Association>
-        <Association Name="FK_KanalEkle_SirketEkle">
-          <End Type="Al_WebModel.SirketEkle" Role="SirketEkle" Multiplicity="0..1" />
+        <Association Name="tbl_kanal_sirket">
           <End Type="Al_WebModel.KanalEkle" Role="KanalEkle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SirketEkle">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="KanalEkle">
-              <PropertyRef Name="SirketEkleId" />
-            </Dependent>
-          </ReferentialConstraint>
+          <End Type="Al_WebModel.SirketEkle" Role="SirketEkle" Multiplicity="*" />
         </Association>
         <Association Name="tblKul_Cihaz">
           <End Type="Al_WebModel.CihazEkle" Role="CihazEkle" Multiplicity="*" />
@@ -340,28 +370,29 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Al_WebModelStoreContainer" CdmEntityContainer="Al_WebEntities">
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Al_WebModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SirketEkle">
-            <EntityTypeMapping TypeName="Al_WebModel.SirketEkle">
-              <MappingFragment StoreEntitySet="SirketEkle">
+        <EntityContainerMapping StorageEntityContainer="Al_WebModelStoreContainer" CdmEntityContainer="Al_WebEntities1">
+          <EntitySetMapping Name="CihazEkles">
+            <EntityTypeMapping TypeName="Al_WebModel.CihazEkle">
+              <MappingFragment StoreEntitySet="CihazEkle">
                 <ScalarProperty Name="Silindi" ColumnName="Silindi" />
-                <ScalarProperty Name="SirketIsim" ColumnName="SirketIsim" />
+                <ScalarProperty Name="SimCard" ColumnName="SimCard" />
+                <ScalarProperty Name="CihazSeriNo" ColumnName="CihazSeriNo" />
+                <ScalarProperty Name="CihazAd" ColumnName="CihazAd" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Kullanicilar">
+          <EntitySetMapping Name="KanalEkles">
+            <EntityTypeMapping TypeName="Al_WebModel.KanalEkle">
+              <MappingFragment StoreEntitySet="KanalEkle">
+                <ScalarProperty Name="Silindi" ColumnName="Silindi" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanicilars">
             <EntityTypeMapping TypeName="Al_WebModel.Kullanicilar">
               <MappingFragment StoreEntitySet="Kullanicilar">
                 <ScalarProperty Name="Silindi" ColumnName="Silindi" />
@@ -377,29 +408,42 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CihazEkle">
-            <EntityTypeMapping TypeName="Al_WebModel.CihazEkle">
-              <MappingFragment StoreEntitySet="CihazEkle">
-                <ScalarProperty Name="SirketEkleId" ColumnName="SirketEkleId" />
+          <EntitySetMapping Name="SirketEkles">
+            <EntityTypeMapping TypeName="Al_WebModel.SirketEkle">
+              <MappingFragment StoreEntitySet="SirketEkle">
                 <ScalarProperty Name="Silindi" ColumnName="Silindi" />
-                <ScalarProperty Name="SimCard" ColumnName="SimCard" />
-                <ScalarProperty Name="CihazSeriNo" ColumnName="CihazSeriNo" />
-                <ScalarProperty Name="CihazAd" ColumnName="CihazAd" />
+                <ScalarProperty Name="SirketIsim" ColumnName="SirketIsim" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="KanalEkle">
-            <EntityTypeMapping TypeName="Al_WebModel.KanalEkle">
-              <MappingFragment StoreEntitySet="KanalEkle">
-                <ScalarProperty Name="SirketEkleId" ColumnName="SirketEkleId" />
-                <ScalarProperty Name="Silindi" ColumnName="Silindi" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Al_WebModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="tbl_cihaz_firma" TypeName="Al_WebModel.tbl_cihaz_firma" StoreEntitySet="tbl_cihaz_firma">
+            <EndProperty Name="SirketEkle">
+              <ScalarProperty Name="Id" ColumnName="SirketId" />
+            </EndProperty>
+            <EndProperty Name="CihazEkle">
+              <ScalarProperty Name="Id" ColumnName="CihazId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="tbl_kanal_sirket" TypeName="Al_WebModel.tbl_kanal_sirket" StoreEntitySet="tbl_kanal_sirket">
+            <EndProperty Name="SirketEkle">
+              <ScalarProperty Name="Id" ColumnName="SirketEkleId" />
+            </EndProperty>
+            <EndProperty Name="KanalEkle">
+              <ScalarProperty Name="Id" ColumnName="KanalEkleId" />
+            </EndProperty>
+          </AssociationSetMapping>
           <AssociationSetMapping Name="tblKul_Cihaz" TypeName="Al_WebModel.tblKul_Cihaz" StoreEntitySet="tblKul_Cihaz">
             <EndProperty Name="Kullanicilar">
               <ScalarProperty Name="Id" ColumnName="KullaniciId" />
@@ -416,7 +460,7 @@
               <ScalarProperty Name="Id" ColumnName="KanalId" />
             </EndProperty>
           </AssociationSetMapping>
-          </EntityContainerMapping>
+        </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -430,7 +474,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

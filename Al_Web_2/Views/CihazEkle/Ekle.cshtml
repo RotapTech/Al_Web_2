@@ -5,91 +5,96 @@
 }
 
 
+@(ViewBag.Error)
 
 @using (Html.BeginForm("Ekle", "CihazEkle", FormMethod.Post))
 {
     <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="tox-form-group--maximize" style="margin-top:30px;">
-                    <label>Cihaz Ad</label>
-                    <input type="text" name="CihazAd" class="form-control" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
-                </div>
-
-                <div class="tox-form-group--maximize" style="margin-top:30px;">
-                    <label>Cihaz Seri-No</label>
-                    <input type="text" name="CihazSeriNo" class="form-control" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
-                </div>
-
-                <div class="tox-form-group--maximize" style="margin-top:30px;">
-                    <label>Sim Kart</label>
-                    <input type="text" name="SimCard" class="form-control" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
-                </div>
-
-                <div class="tox-form-group--maximize" style="margin-top:30px;">
-                    <label>Kullanıcı</label>
-                    <br />
-                    @*@Html.DropDownListFor(x => x.Kullanicilar, (List<SelectListItem>)ViewBag.kllnc, new { @class = "form-control" })*@
-
-                    @*@Html.ListBoxFor(x => x.Kullanicilar, (List<SelectListItem>)ViewBag.kllnc, new { @class = "form-control" })*@
-
-                    <select class="form-control" id="Kullanicilar" multiple="multiple" name="Kullanicilar">
-
-                        @for (int i = 0; i < ViewBag.kllnc.Count; i++)
-                        {
-                            if (ViewBag.kllnc[i].Selected == true)
-                            {
-                                <option selected value="@ViewBag.kllnc[i].Value">@ViewBag.kllnc[i].Text</option>
-
-                            }
-                            else
-                            {
-                                <option value="@ViewBag.kllnc[i].Value">@ViewBag.kllnc[i].Text</option>
-
-                            }
-                        }
-
-                    </select>
-                </div>
-
-                <div class="tox-form-group--maximize" style="margin-top:30px;">
-                    <label>Firma</label>
-                    @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
-
-                    <br />
-                    <select class="form-control" id="FirmaEkle" name="SirketEkle" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')">
-
-                        @for (int i = 0; i < ViewBag.frm.Count; i++)
-                        {
-                            if (ViewBag.frm[i].Selected == true)
-                            {
-                                <option selected value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
-
-                            }
-                            else
-                            {
-                                <option value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
-
-                            }
-                        }
-
-
-                    </select>
-                </div>
-
-
-                <br />
-                <br />
-                <button class="btn btn-primary" type="submit">Ekle</button>
-                <a href="/CihazEkle/Index">Cihaz Listesi</a>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="tox-form-group--maximize" style="margin-top:30px;">
+                <label>Cihaz Ad</label>
+                <input type="text" name="CihazAd" class="form-control" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
             </div>
+
+            <div class="tox-form-group--maximize" style="margin-top:30px;">
+                <label>Cihaz Seri-No</label>
+                <input type="text" name="CihazSeriNo" class="form-control" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
+            </div>
+
+            <div class="tox-form-group--maximize" style="margin-top:30px;">
+                <label>Sim Kart</label>
+                <input type="text" name="SimCard" class="form-control" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
+            </div>
+
+            <div class="tox-form-group--maximize" style="margin-top:30px;">
+                <label>Kullanıcı</label>
+                <br />
+                @*@Html.DropDownListFor(x => x.Kullanicilar, (List<SelectListItem>)ViewBag.kllnc, new { @class = "form-control" })*@
+
+                @*@Html.ListBoxFor(x => x.Kullanicilar, (List<SelectListItem>)ViewBag.kllnc, new { @class = "form-control" })*@
+
+                <select class="form-control" id="Kullanicilar" multiple="multiple" name="Kullanicilar">
+
+                    @for (int i = 0; i < ViewBag.kllnc.Count; i++)
+                    {
+                        if (ViewBag.kllnc[i].Selected == true)
+                        {
+                            <option selected value="@ViewBag.kllnc[i].Value">@ViewBag.kllnc[i].Text</option>
+
+                        }
+                        else
+                        {
+                            <option value="@ViewBag.kllnc[i].Value">@ViewBag.kllnc[i].Text</option>
+
+                        }
+                    }
+
+                </select>
+            </div>
+
+            <div class="tox-form-group--maximize" style="margin-top:30px;">
+                <label>Firma</label>
+                @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
+
+                <br />
+                <select class="form-control" id="FirmaEkle" name="SirketEkle" multiple="multiple">
+
+                    @for (int i = 0; i < ViewBag.frm.Count; i++)
+                    {
+                        if (ViewBag.frm[i].Selected == true)
+                        {
+                            <option selected value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
+
+                        }
+                        else
+                        {
+                            <option value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
+
+                        }
+                    }
+
+
+                </select>
+            </div>
+
+
+            <br />
+            <br />
+            <button class="btn btn-primary" type="submit">Ekle</button>
+            <a href="/CihazEkle/Index">Cihaz Listesi</a>
         </div>
+    </div>
     </div>
 }
 
 <script type="text/javascript">
     $(function () {
         $('#Kullanicilar').multiselect({
+            includeSelectAllOption: true
+        });
+
+        $('#FirmaEkle').multiselect({
             includeSelectAllOption: true
         });
     });

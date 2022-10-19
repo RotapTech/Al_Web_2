@@ -6,87 +6,98 @@
 }
 
 <br />
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <form method="post" enctype="multipart/form-data">
 
-                <div class="tox-form-group--maximize" style="margin-top:30px;">
-                    <label>Name</label>
-                    <input type="text" name="Name" class="form-control" value="@Model.Name" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
-                </div>
+@using (Html.BeginForm("Guncelle", "KanalEkle", FormMethod.Post))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post" enctype="multipart/form-data">
 
-                <div class="tox-form-group--maximize" style="margin-top:30px;">
-                    <label>Type</label>
-                    <input type="text" name="Type" class="form-control" value="@Model.Type" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
-                </div>
+                    <div class="tox-form-group--maximize" style="margin-top:30px;">
+                        <label>Name</label>
+                        <input type="text" name="Name" class="form-control" value="@Model.Name" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
+                    </div>
 
-                <div class="tox-form-group--maximize" style="margin-top:30px;" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')">
-                    <label>Kullanıcı</label>
+                    <div class="tox-form-group--maximize" style="margin-top:30px;">
+                        <label>Type</label>
+                        <input type="text" name="Type" class="form-control" value="@Model.Type" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
+                    </div>
+
+                    <div class="tox-form-group--maximize" style="margin-top:30px;">
+                        <label>Kullanıcı</label>
+                        <br />
+                        @*@Html.ListBoxFor(x => x.Kullanicilar, (List<SelectListItem>)ViewBag.kllnc, new { @class = "form-control" })*@
+
+                        <select class="form-control" id="kullanicilar" multiple="multiple" name="Kullanicilar">
+
+
+                            @for (int i = 0; i < ViewBag.kllnc.Count; i++)
+                            {
+                                if (ViewBag.kllnc[i].Selected == true)
+                                {
+                                    <option selected value="@ViewBag.kllnc[i].Value">@ViewBag.kllnc[i].Text</option>
+
+                                }
+                                else
+                                {
+                                    <option value="@ViewBag.kllnc[i].Value">@ViewBag.kllnc[i].Text</option>
+
+                                }
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <div class="tox-form-group--maximize" style="margin-top:30px;">
+                        <label>Firma</label>
+                        @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
+
+                        <br />
+                        <select class="form-control" id="FirmaEkle" multiple="multiple" name="Sirketler">
+
+                            @for (int i = 0; i < ViewBag.frm.Count; i++)
+                            {
+                                if (ViewBag.frm[i].Selected == true)
+                                {
+                                    <option selected value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
+
+                                }
+                                else
+                                {
+                                    <option value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
+
+                                }
+                            }
+
+
+                        </select>
+                    </div>
+
+
                     <br />
-                    @*@Html.ListBoxFor(x => x.Kullanicilar, (List<SelectListItem>)ViewBag.kllnc, new { @class = "form-control" })*@
-
-                    <select class="form-control" id="kullanicilar" multiple="multiple" name="Kullanicilar">
-
-
-                        @for (int i = 0; i < ViewBag.kllnc.Count; i++)
-                        {
-                            if (ViewBag.kllnc[i].Selected == true)
-                            {
-                                <option selected value="@ViewBag.kllnc[i].Value">@ViewBag.kllnc[i].Text</option>
-
-                            }
-                            else
-                            {
-                                <option value="@ViewBag.kllnc[i].Value">@ViewBag.kllnc[i].Text</option>
-
-                            }
-                        }
-
-                    </select>
-
-                </div>
-
-                <div class="tox-form-group--maximize" style="margin-top:30px;">
-                    <label>Firma</label>
-                    @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
-
                     <br />
-                    <select class="form-control" id="FirmaEkle" name="SirketEkle" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')">
+                    <button type="submit" class="btn btn-primary">Guncelle</button>
+                    <a href="/KanalEkle/Index">Kanal Listesi</a>
 
-                        @for (int i = 0; i < ViewBag.frm.Count; i++)
-                        {
-                            if (ViewBag.frm[i].Selected == true)
-                            {
-                                <option selected value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
-
-                            }
-                            else
-                            {
-                                <option value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
-
-                            }
-                        }
-
-
-                    </select>
-                </div>
-
-                <br />
-                <br />
-                <button type="submit" class="btn btn-primary">Guncelle</button>
-                <a href="/KanalEkle/Index">Kanal Listesi</a>
-
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
 
-</div>
+    </div>
+}
 
 <script type="text/javascript">
     $(function () {
         $('#kullanicilar').multiselect({
             includeSelectAllOption: true
+        });
+
+        $(function () {
+            $('#FirmaEkle').multiselect({
+                includeSelectAllOption: true
+            });
         });
     });
 </script>

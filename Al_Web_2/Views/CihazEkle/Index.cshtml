@@ -7,7 +7,7 @@
 
 <div style="max-width: 90% !important; position: relative; margin: auto;">
 
-    <a href="/CihazEkle/Ekle" class="btn btn-primary">Cihaz Ekle</a>
+    <a href="/CihazEkle/Ekle" style="margin-left: 1120px" class="btn btn-primary">Cihaz Ekle</a>
     <br />
     <br />
 
@@ -23,7 +23,7 @@
                         <th>Cihaz Seri-No</th>
                         <th>Sim Kart</th>
                         <th>Kullanıcı</th>
-                        <th>Firma</th>
+                        <th>Cihaz Firma</th>
                         <th>Sil</th>
                         <th>Güncelle</th>
                     }
@@ -31,36 +31,45 @@
             </thead>
             @foreach (var item in Model)
             {
-        <tr>
-            <td><input type="checkbox" class="checkbox" value="@item.Id" name="cihazId" /></td>
-            <td>@item.CihazAd</td>
-            <td>@item.CihazSeriNo</td>
-            <td>@item.SimCard</td>
-            <td>
-                <div style='padding: 3px; width: 350px; word-break: break-all; word-wrap: break-word; max-width: 100%; height: 80px; overflow: auto;'>
+                <tr>
+                    <td><input type="checkbox" class="checkbox" value="@item.Id" name="cihazId" /></td>
+                    <td>@item.CihazAd</td>
+                    <td>@item.CihazSeriNo</td>
+                    <td>@item.SimCard</td>
+                    <td>
+                        <div style='padding: 3px; width: 350px; word-break: break-all; word-wrap: break-word; max-width: 100%; height: 80px; overflow: auto;'>
 
-                    @foreach (var itemc in item.Kullanicilar)
+                            @foreach (var itemc in item.Kullanicilars)
+                            {
+                                <span style="margin-bottom:7px;">@($"{itemc.Ad} {itemc.Soyad}")<br /></span>
+                            }
+                        </div>
+
+                    </td>
+                    <td>
+                        <div style='padding: 3px; width: 350px; word-break: break-all; word-wrap: break-word; max-width: 100%; height: 80px; overflow: auto;'>
+
+                            @foreach (var itemc in item.SirketEkles)
+                            {
+                                <span style="margin-bottom:7px;">@($"{itemc.SirketIsim}")<br /></span>
+                            }
+                        </div>
+
+                    </td>
+
+
+                    @if (User.IsInRole("A"))
                     {
-                        <span style="margin-bottom:7px;">@($"{itemc.Ad} {itemc.Soyad}")<br /></span>
+                        <td>@Html.ActionLink("Sil", "Sil", new { id = item.Id }, new { @class = "btn btn-primary", onclick = "return confirm('Silmek İstiyor Musunuz ?')" })</td>
+
+                        <td><a href="/CihazEkle/Guncelle/@item.Id" class="btn btn-primary">Güncelle</a></td>
+
                     }
-                </div>
 
-            </td>
-            <td>@(item.SirketEkle?.SirketIsim)</td>
-
-
-            @if (User.IsInRole("A"))
-            {
-                <td>@Html.ActionLink("Sil", "Sil", new { id = item.Id }, new { @class = "btn btn-primary", onclick = "return confirm('Silmek İstiyor Musunuz ?')" })</td>
-
-                <td><a href="/CihazEkle/Guncelle/@item.Id" class="btn btn-primary">Güncelle</a></td>
-
-            }
-
-        </tr>
+                </tr>
             }
         </table>
-        <input type="submit" value="Tümünü Sil" class="btn btn-danger" style="margin-top:10px;" onclick="return confirm('Emin misiniz ?')" />
+        <input type="submit" value="Seçilenleri Sil" class="btn btn-danger" style="margin-top:10px;" onclick="return confirm('Emin misiniz ?')" />
     }
 </div>
 

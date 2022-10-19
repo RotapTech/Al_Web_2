@@ -16,17 +16,17 @@ namespace Al_Web_2.Models
     {
         public SirketEkle()
         {
-            this.Kullanicilar = new HashSet<Kullanicilar>();
-            this.CihazEkle = new HashSet<CihazEkle>();
-            this.KanalEkle = new HashSet<KanalEkle>();
+            this.Kullanicilars = new HashSet<Kullanicilar>();
+            this.CihazEkles = new HashSet<CihazEkle>();
+            this.KanalEkles = new HashSet<KanalEkle>();
         }
     
         public int Id { get; set; }
         public string SirketIsim { get; set; }
         public Nullable<bool> Silindi { get; set; }
     
-        public virtual ICollection<Kullanicilar> Kullanicilar { get; set; }
-        public virtual ICollection<CihazEkle> CihazEkle { get; set; }
-        public virtual ICollection<KanalEkle> KanalEkle { get; set; }
+        public virtual ICollection<Kullanicilar> Kullanicilars { get; set; }
+        public virtual ICollection<CihazEkle> CihazEkles { get; set; }
+        public virtual ICollection<KanalEkle> KanalEkles { get; set; }
     }
 }

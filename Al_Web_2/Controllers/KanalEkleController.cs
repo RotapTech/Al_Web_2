@@ -10,12 +10,22 @@ namespace Al_Web_2.Controllers
     public class KanalEkleController : Controller
     {
         // GET: KanalEkle
-        Al_WebEntities db = new Al_WebEntities();
+        Al_WebEntities1 db = new Al_WebEntities1();
         public ActionResult Index()
         {
-            var list = db.KanalEkles.Include("SirketEkle").Where(x => x.Silindi == false).ToList();
+            var list = db.KanalEkle.Where(x => x.Silindi == false).ToList();
 
-            
+            foreach (var item in list)
+            {
+                foreach (var items in item.SirketEkles.ToList())
+                {
+                    if (items.Silindi == true)
+                    {
+                        item.SirketEkles.Remove(items);
+                    }
+                }
+            }
+
             return View(list);
         }
         [HttpPost]
@@ -26,25 +36,25 @@ namespace Al_Web_2.Controllers
                 string[] ids = formCollection["kanalId"].Split(new char[] { ',' });
                 foreach (string id in ids)
                 {
-                    var kanal = db.KanalEkles.Find(int.Parse(id));
+                    var kanal = db.KanalEkle.Find(int.Parse(id));
 
-                   
+
                     kanal.Silindi = true;
-                    kanal.Kullanicilar.Clear();
-                    
+                    kanal.Kullanicilars.Clear();
+
 
                     //db.KanalEkles.Remove(kanal);
                 }
                 db.SaveChanges();
             }
-            var list = db.KanalEkles.Where(x => x.Silindi == false).ToList();
+            var list = db.KanalEkle.Where(x => x.Silindi == false).ToList();
 
-                    return View(list);
+            return View(list);
         }
 
         public ActionResult Ekle()
         {
-            List<SelectListItem> deger1 = (from x in db.Kullanicilars.Where(x => x.Rol != "A").ToList()
+            List<SelectListItem> deger1 = (from x in db.Kullanicilar.Where(x => x.Rol != "A" && x.Silindi == false).ToList()
                                            select new SelectListItem
                                            {
                                                Text = x.Ad + " " + x.Soyad,
@@ -52,12 +62,14 @@ namespace Al_Web_2.Controllers
                                            }).ToList();
             ViewBag.kllnc = deger1;
 
-            List<SelectListItem> deger2 = (from x in db.SirketEkle.ToList()
+            List<SelectListItem> deger2 = (from x in db.SirketEkle.ToList() where x.Silindi==false
                                            select new SelectListItem
                                            {
                                                Text = x.SirketIsim,
                                                Value = x.Id.ToString()
                                            }).ToList();
+            ViewBag.Error = TempData["Error"];
+
             ViewBag.frm = deger2;
 
             return View();
@@ -66,7 +78,7 @@ namespace Al_Web_2.Controllers
 
 
         [HttpPost]
-        public ActionResult Ekle(KanalEkle Data, List<string> Kullanicilar, FormCollection frm)
+        public ActionResult Ekle(KanalEkle Data, List<string> Kullanicilar, List<string> SirketEkle)
         {
 
             if (Kullanicilar != null)
@@ -80,8 +92,8 @@ namespace Al_Web_2.Controllers
 
                     if (success)
                     {
-                        var kullanici = db.Kullanicilars.Where(x => x.Id == kullaniciId).FirstOrDefault();
-                        Data.Kullanicilar.Add(kullanici);
+                        var kullanici = db.Kullanicilar.Where(x => x.Id == kullaniciId).FirstOrDefault();
+                        Data.Kullanicilars.Add(kullanici);
                     }
                     else
                     {
@@ -90,20 +102,45 @@ namespace Al_Web_2.Controllers
 
                 }
             }
-            if (frm["SirketEkle"] != null)
+
+            if (SirketEkle != null)
             {
                 //Data.SirketEkleId = Convert.ToInt16(frm["FirmaEkle"].ToString());
+                foreach (var item in SirketEkle)
+                {
 
-                int firmaId = Convert.ToInt16(frm["SirketEkle"].ToString());
-                var sirket = db.SirketEkle.Where(x => x.Id == firmaId).FirstOrDefault();
+                    int firmaId;
 
-                Data.SirketEkle = sirket;
+                    bool success = int.TryParse(item, out firmaId);
+
+                    if (success)
+                    {
+                        var sirket = db.SirketEkle.Where(x => x.Id == firmaId && x.Silindi == false).FirstOrDefault();
+                        Data.SirketEkles.Add(sirket);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                }
 
             }
 
             Data.Silindi = false;
-            db.KanalEkles.Add(Data);
-            db.SaveChanges();
+            db.KanalEkle.Add(Data);
+            try
+            {
+                db.SaveChanges();
+
+            }
+            catch (Exception)
+            {
+
+                TempData["Error"] = "Aynı isim var!";
+
+                return RedirectToAction("Ekle");
+            }
 
             return RedirectToAction("Index");
 
@@ -111,9 +148,9 @@ namespace Al_Web_2.Controllers
 
         public ActionResult Sil(int id)
         {
-            var kanal = db.KanalEkles.Where(x => x.Id == id).FirstOrDefault();
+            var kanal = db.KanalEkle.Where(x => x.Id == id).FirstOrDefault();
             kanal.Silindi = true;
-            kanal.Kullanicilar.Clear();
+            kanal.Kullanicilars.Clear();
 
             //db.KanalEkles.Remove(kanal);
             db.SaveChanges();
@@ -121,10 +158,10 @@ namespace Al_Web_2.Controllers
         }
         public ActionResult Guncelle(int id)
         {
-            var kanal = db.KanalEkles.Include("SirketEkle").Where(x => x.Id == id).FirstOrDefault();
+            var kanal = db.KanalEkle.Where(x => x.Id == id).FirstOrDefault();
 
 
-            List<SelectListItem> deger1 = (from x in db.Kullanicilars.Where(x => x.Rol != "A").ToList()
+            List<SelectListItem> deger1 = (from x in db.Kullanicilar.Where(x => x.Rol != "A").ToList()
                                            select new SelectListItem
                                            {
                                                Text = x.Ad + " " + x.Soyad,
@@ -134,18 +171,28 @@ namespace Al_Web_2.Controllers
                                            }).ToList();
 
 
-            foreach (var kullanici in kanal.Kullanicilar)
+            foreach (var kullanici in kanal.Kullanicilars)
             {
                 deger1.Where(x => x.Value == kullanici.Id.ToString()).FirstOrDefault().Selected = true;
             }
             ViewBag.kllnc = deger1;
 
-            List<SelectListItem> deger2 = (from x in db.SirketEkle.ToList()
+            List<SelectListItem> deger2 = (from x in db.SirketEkle.ToList() where x.Silindi == false
                                            select new SelectListItem
                                            {
                                                Text = x.SirketIsim,
                                                Value = x.Id.ToString()
                                            }).ToList();
+           
+                foreach (var firma in kanal.SirketEkles)
+                {
+                if (firma.Silindi == false)
+                {
+                    deger2.Where(x => x.Value == firma.Id.ToString()).FirstOrDefault().Selected = true;
+
+                }
+            }
+            
 
             ViewBag.frm = deger2;
 
@@ -153,8 +200,10 @@ namespace Al_Web_2.Controllers
         }
 
         [HttpPost]
-        public ActionResult Guncelle(KanalEkle model, List<string> Kullanicilar, FormCollection frm)
+        public ActionResult Guncelle(KanalEkle model, List<string> Kullanicilar, List<string> Sirketler)
         {
+            var kanal = db.KanalEkle.Find(model.Id);
+
             if (Kullanicilar != null)
             {
                 foreach (var item in Kullanicilar)
@@ -165,8 +214,8 @@ namespace Al_Web_2.Controllers
 
                     if (success)
                     {
-                        var kullanici = db.Kullanicilars.Where(x => x.Id == kullaniciId).FirstOrDefault();
-                        model.Kullanicilar.Add(kullanici);
+                        var kullanici = db.Kullanicilar.Where(x => x.Id == kullaniciId).FirstOrDefault();
+                        model.Kullanicilars.Add(kullanici);
                     }
                     else
                     {
@@ -189,25 +238,40 @@ namespace Al_Web_2.Controllers
 
                 }
             }
-
-            if (frm["SirketEkle"] != null)
+            if (Sirketler != null)
             {
+                kanal.SirketEkles.Clear();
                 //Data.SirketEkleId = Convert.ToInt16(frm["FirmaEkle"].ToString());
+                foreach (var item in Sirketler)
+                {
 
-                int firmaId = Convert.ToInt16(frm["SirketEkle"].ToString());
-                var sirket = db.SirketEkle.Where(x => x.Id == firmaId).FirstOrDefault();
+                    int firmaId;
 
-                model.SirketEkle = sirket;
+                    bool success = int.TryParse(item, out firmaId);
 
+                    if (success)
+                    {
+                        var sirket = db.SirketEkle.Where(x => x.Id == firmaId).FirstOrDefault();
+                        kanal.SirketEkles.Add(sirket);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                }
+
+            }
+            else
+            {
+                kanal.SirketEkles.Clear();
             }
 
 
-            var kanal = db.KanalEkles.Find(model.Id);
             kanal.Name = model.Name;
             kanal.Type = model.Type;
-            kanal.SirketEkle = model.SirketEkle;
-            kanal.Kullanicilar.Clear();
-            kanal.Kullanicilar = model.Kullanicilar;
+            kanal.Kullanicilars.Clear();
+            kanal.Kullanicilars = model.Kullanicilars;
 
 
             db.SaveChanges();

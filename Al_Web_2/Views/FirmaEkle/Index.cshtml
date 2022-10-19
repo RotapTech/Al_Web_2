@@ -5,8 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style="max-width: 60% !important; position: relative; margin: auto;"  >
-    <a href="/FirmaEkle/Ekle" class="btn btn-primary">Firma Ekle</a>
+<div style="max-width: 60% !important; position: relative; margin: auto;" >
+    <a href="/FirmaEkle/Ekle" style="margin-left: 600px" class="btn btn-primary">Firma Ekle</a>
     <br />
     <br />
 
@@ -35,7 +35,7 @@
                     <td>
                         <div style='padding: 3px;  word-break: break-all; word-wrap: break-word; max-height: 80px; overflow: auto;'>
 
-                            @foreach (var itemk in item.Kullanicilar)
+                            @foreach (var itemk in item.Kullanicilars)
                             {
                                 <span style="margin-bottom:7px;">@($"{itemk.Ad} {itemk.Soyad}")<br /></span>
                             }
@@ -53,7 +53,7 @@
                 </tr>
             }
         </table>
-        <input type="submit" value="Tümünü Sil" class="btn btn-danger" style="margin-top:10px;" onclick="return confirm('Emin misiniz ?')" />
+        <input type="submit" value="Seçilenleri Sil" class="btn btn-danger" style="margin-top:10px;" onclick="return confirm('Emin misiniz ?')" />
     }
 </div>
 

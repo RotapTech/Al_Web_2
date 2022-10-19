@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@(ViewBag.Error)
 
 
 @using (Html.BeginForm("Ekle", "KullaniciEkle", FormMethod.Post))
@@ -13,9 +14,9 @@
             <div class="col-md-4">
 
                 @*<div class="tox-form-group--maximize">
-            <label>Id</label>
-            <input type="text" name="Id" class="form-control" />
-        </div>*@
+                        <label>Id</label>
+                        <input type="text" name="Id" class="form-control" />
+                    </div>*@
                 <div class="tox-form-group--maximize" style="margin-top:30px;">
                     <label>Ad</label>
                     <input type="text" name="Ad" class="form-control" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
@@ -43,14 +44,14 @@
                 </div>
 
                 @*<div class="tox-form-group--maximize">
-            <label>Şifre Tekrar</label>
-            <input type="text" name="SifreTekrar" class="form-control" />
-        </div>*@
+                        <label>Şifre Tekrar</label>
+                        <input type="text" name="SifreTekrar" class="form-control" />
+                    </div>*@
 
                 @*<div class="tox-form-group--maximize">
-            <label>Rol</label>
-            <input type="text" name="Rol" class="form-control" />
-        </div>*@
+                        <label>Rol</label>
+                        <input type="text" name="Rol" class="form-control" />
+                    </div>*@
 
                 <div class="tox-form-group--maximize" style="margin-top:30px;">
                     <label>Kanal</label>
@@ -106,7 +107,7 @@
                     @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
 
                     <br />
-                    <select class="form-control" id="FirmaEkle"  name="SirketEkle" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" >
+                    <select class="form-control" id="FirmaEkle" name="SirketEkle" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')">
 
                         @for (int i = 0; i < ViewBag.frm.Count; i++)
                         {
@@ -142,10 +143,12 @@
         $('#KanalEkle').multiselect({
             includeSelectAllOption: true
         });
-    });
-
-    $(function () {
+   
         $('#CihazEkle').multiselect({
+            includeSelectAllOption: true
+        });
+
+        $('#FirmaEkle').multiselect({
             includeSelectAllOption: true
         });
     });
