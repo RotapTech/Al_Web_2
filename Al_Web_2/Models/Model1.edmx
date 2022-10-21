@@ -67,14 +67,12 @@
           <Property Name="SirketId" Type="int" Nullable="false" />
           <Property Name="CihazId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="tbl_kanal_sirket">
-          <Key>
-            <PropertyRef Name="SirketEkleId" />
-            <PropertyRef Name="KanalEkleId" />
-          </Key>
-          <Property Name="SirketEkleId" Type="int" Nullable="false" />
-          <Property Name="KanalEkleId" Type="int" Nullable="false" />
-        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Al_Web.dbo.tbl_kul_sirket' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="tbl_kul_sirket">
+          <Property Name="KullaniciId" Type="int" />
+          <Property Name="SirketId" Type="int" />
+        </EntityType>-->
         <EntityType Name="tblKul_Cihaz">
           <Key>
             <PropertyRef Name="KullaniciId" />
@@ -151,30 +149,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tbl_kanal_sirket_KanalEkle">
-          <End Role="KanalEkle" Type="Self.KanalEkle" Multiplicity="1" />
-          <End Role="tbl_kanal_sirket" Type="Self.tbl_kanal_sirket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="KanalEkle">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="tbl_kanal_sirket">
-              <PropertyRef Name="KanalEkleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tbl_kanal_sirket_SirketEkle">
-          <End Role="SirketEkle" Type="Self.SirketEkle" Multiplicity="1" />
-          <End Role="tbl_kanal_sirket" Type="Self.tbl_kanal_sirket" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SirketEkle">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="tbl_kanal_sirket">
-              <PropertyRef Name="SirketEkleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <!--Errors Found During Generation:
+error 6004: The table 'Al_Web.dbo.tbl_kul_sirket' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_tbl_kul_sirket_Kullanicilar" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'Al_Web.dbo.tbl_kul_sirket' is referenced by a relationship, but cannot be found.
+        <Association Name="FK_tbl_kul_sirket_SirketEkle" />-->
         <Association Name="FK_tblKul_Cihaz_CihazEkle">
           <End Role="CihazEkle" Type="Self.CihazEkle" Multiplicity="1" />
           <End Role="tblKul_Cihaz" Type="Self.tblKul_Cihaz" Multiplicity="*" />
@@ -261,7 +241,6 @@
           <EntitySet Name="SirketEkle" EntityType="Self.SirketEkle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_cihaz_firma" EntityType="Self.tbl_cihaz_firma" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tbl_kanal_sirket" EntityType="Self.tbl_kanal_sirket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblKul_Cihaz" EntityType="Self.tblKul_Cihaz" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblKul_Kanal" EntityType="Self.tblKul_Kanal" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CihazEkle_SirketEkle" Association="Self.FK_CihazEkle_SirketEkle">
@@ -283,14 +262,6 @@
           <AssociationSet Name="FK_tbl_cihaz_firma_SirketEkle1" Association="Self.FK_tbl_cihaz_firma_SirketEkle1">
             <End Role="SirketEkle" EntitySet="SirketEkle" />
             <End Role="tbl_cihaz_firma" EntitySet="tbl_cihaz_firma" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_kanal_sirket_KanalEkle" Association="Self.FK_tbl_kanal_sirket_KanalEkle">
-            <End Role="KanalEkle" EntitySet="KanalEkle" />
-            <End Role="tbl_kanal_sirket" EntitySet="tbl_kanal_sirket" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tbl_kanal_sirket_SirketEkle" Association="Self.FK_tbl_kanal_sirket_SirketEkle">
-            <End Role="SirketEkle" EntitySet="SirketEkle" />
-            <End Role="tbl_kanal_sirket" EntitySet="tbl_kanal_sirket" />
           </AssociationSet>
           <AssociationSet Name="FK_tblKul_Cihaz_CihazEkle" Association="Self.FK_tblKul_Cihaz_CihazEkle">
             <End Role="CihazEkle" EntitySet="CihazEkle" />
@@ -353,9 +324,17 @@
             <End Role="SirketEkle" EntitySet="SirketEkles" />
             <End Role="CihazEkle" EntitySet="CihazEkles" />
           </AssociationSet>
+          <AssociationSet Name="FK_KanalEkle_SirketEkle" Association="Al_WebModel.FK_KanalEkle_SirketEkle">
+            <End Role="SirketEkle" EntitySet="SirketEkles" />
+            <End Role="KanalEkle" EntitySet="KanalEkles" />
+          </AssociationSet>
           <AssociationSet Name="FK_Kullanicilar_SirketEkle" Association="Al_WebModel.FK_Kullanicilar_SirketEkle">
             <End Role="SirketEkle" EntitySet="SirketEkles" />
             <End Role="Kullanicilar" EntitySet="Kullanicilars" />
+          </AssociationSet>
+          <AssociationSet Name="tbl_cihaz_firma" Association="Al_WebModel.tbl_cihaz_firma">
+            <End Role="CihazEkle" EntitySet="CihazEkles" />
+            <End Role="SirketEkle" EntitySet="SirketEkles" />
           </AssociationSet>
           <AssociationSet Name="tblKul_Cihaz" Association="Al_WebModel.tblKul_Cihaz">
             <End Role="CihazEkle" EntitySet="CihazEkles" />
@@ -364,18 +343,6 @@
           <AssociationSet Name="tblKul_Kanal" Association="Al_WebModel.tblKul_Kanal">
             <End Role="KanalEkle" EntitySet="KanalEkles" />
             <End Role="Kullanicilar" EntitySet="Kullanicilars" />
-          </AssociationSet>
-          <AssociationSet Name="tbl_cihaz_firma" Association="Al_WebModel.tbl_cihaz_firma">
-            <End Role="CihazEkle" EntitySet="CihazEkles" />
-            <End Role="SirketEkle" EntitySet="SirketEkles" />
-          </AssociationSet>
-          <AssociationSet Name="tbl_kanal_sirket" Association="Al_WebModel.tbl_kanal_sirket">
-            <End Role="KanalEkle" EntitySet="KanalEkles" />
-            <End Role="SirketEkle" EntitySet="SirketEkles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_KanalEkle_SirketEkle" Association="Al_WebModel.FK_KanalEkle_SirketEkle">
-            <End Role="SirketEkle" EntitySet="SirketEkles" />
-            <End Role="KanalEkle" EntitySet="KanalEkles" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
@@ -400,8 +367,8 @@
           <Property Name="SirketEkleId" Type="Int32" />
           <Property Name="Silindi" Type="Boolean" />
           <NavigationProperty Name="SirketEkle" Relationship="Al_WebModel.FK_CihazEkle_SirketEkle" FromRole="CihazEkle" ToRole="SirketEkle" />
-          <NavigationProperty Name="Kullanicilars" Relationship="Al_WebModel.tblKul_Cihaz" FromRole="CihazEkle" ToRole="Kullanicilar" />
           <NavigationProperty Name="SirketEkles" Relationship="Al_WebModel.tbl_cihaz_firma" FromRole="CihazEkle" ToRole="SirketEkle" />
+          <NavigationProperty Name="Kullanicilars" Relationship="Al_WebModel.tblKul_Cihaz" FromRole="CihazEkle" ToRole="Kullanicilar" />
         </EntityType>
         <EntityType Name="KanalEkle">
           <Key>
@@ -412,9 +379,8 @@
           <Property Name="SirketEkleId" Type="Int32" />
           <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Silindi" Type="Boolean" />
-          <NavigationProperty Name="Kullanicilars" Relationship="Al_WebModel.tblKul_Kanal" FromRole="KanalEkle" ToRole="Kullanicilar" />
-          <NavigationProperty Name="SirketEkles" Relationship="Al_WebModel.tbl_kanal_sirket" FromRole="KanalEkle" ToRole="SirketEkle" />
           <NavigationProperty Name="SirketEkle" Relationship="Al_WebModel.FK_KanalEkle_SirketEkle" FromRole="KanalEkle" ToRole="SirketEkle" />
+          <NavigationProperty Name="Kullanicilars" Relationship="Al_WebModel.tblKul_Kanal" FromRole="KanalEkle" ToRole="Kullanicilar" />
         </EntityType>
         <EntityType Name="Kullanicilar">
           <Key>
@@ -442,10 +408,9 @@
           <Property Name="SirketIsim" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Silindi" Type="Boolean" />
           <NavigationProperty Name="CihazEkles" Relationship="Al_WebModel.FK_CihazEkle_SirketEkle" FromRole="SirketEkle" ToRole="CihazEkle" />
+          <NavigationProperty Name="KanalEkles" Relationship="Al_WebModel.FK_KanalEkle_SirketEkle" FromRole="SirketEkle" ToRole="KanalEkle" />
           <NavigationProperty Name="Kullanicilars" Relationship="Al_WebModel.FK_Kullanicilar_SirketEkle" FromRole="SirketEkle" ToRole="Kullanicilar" />
           <NavigationProperty Name="CihazEkles1" Relationship="Al_WebModel.tbl_cihaz_firma" FromRole="SirketEkle" ToRole="CihazEkle" />
-          <NavigationProperty Name="KanalEkles" Relationship="Al_WebModel.tbl_kanal_sirket" FromRole="SirketEkle" ToRole="KanalEkle" />
-          <NavigationProperty Name="KanalEkles1" Relationship="Al_WebModel.FK_KanalEkle_SirketEkle" FromRole="SirketEkle" ToRole="KanalEkle" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -469,6 +434,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_KanalEkle_SirketEkle">
+          <End Type="Al_WebModel.SirketEkle" Role="SirketEkle" Multiplicity="0..1" />
+          <End Type="Al_WebModel.KanalEkle" Role="KanalEkle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SirketEkle">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KanalEkle">
+              <PropertyRef Name="SirketEkleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Kullanicilar_SirketEkle">
           <End Type="Al_WebModel.SirketEkle" Role="SirketEkle" Multiplicity="0..1" />
           <End Type="Al_WebModel.Kullanicilar" Role="Kullanicilar" Multiplicity="*" />
@@ -481,6 +458,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="tbl_cihaz_firma">
+          <End Type="Al_WebModel.CihazEkle" Role="CihazEkle" Multiplicity="*" />
+          <End Type="Al_WebModel.SirketEkle" Role="SirketEkle" Multiplicity="*" />
+        </Association>
         <Association Name="tblKul_Cihaz">
           <End Type="Al_WebModel.CihazEkle" Role="CihazEkle" Multiplicity="*" />
           <End Type="Al_WebModel.Kullanicilar" Role="Kullanicilar" Multiplicity="*" />
@@ -488,26 +469,6 @@
         <Association Name="tblKul_Kanal">
           <End Type="Al_WebModel.KanalEkle" Role="KanalEkle" Multiplicity="*" />
           <End Type="Al_WebModel.Kullanicilar" Role="Kullanicilar" Multiplicity="*" />
-        </Association>
-        <Association Name="tbl_cihaz_firma">
-          <End Type="Al_WebModel.CihazEkle" Role="CihazEkle" Multiplicity="*" />
-          <End Type="Al_WebModel.SirketEkle" Role="SirketEkle" Multiplicity="*" />
-        </Association>
-        <Association Name="tbl_kanal_sirket">
-          <End Type="Al_WebModel.KanalEkle" Role="KanalEkle" Multiplicity="*" />
-          <End Type="Al_WebModel.SirketEkle" Role="SirketEkle" Multiplicity="*" />
-        </Association>
-        <Association Name="FK_KanalEkle_SirketEkle">
-          <End Type="Al_WebModel.SirketEkle" Role="SirketEkle" Multiplicity="0..1" />
-          <End Type="Al_WebModel.KanalEkle" Role="KanalEkle" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SirketEkle">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="KanalEkle">
-              <PropertyRef Name="SirketEkleId" />
-            </Dependent>
-          </ReferentialConstraint>
         </Association>
         </Schema>
     </edmx:ConceptualModels>
@@ -598,6 +559,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="tbl_cihaz_firma" TypeName="Al_WebModel.tbl_cihaz_firma" StoreEntitySet="tbl_cihaz_firma">
+            <EndProperty Name="SirketEkle">
+              <ScalarProperty Name="Id" ColumnName="SirketId" />
+            </EndProperty>
+            <EndProperty Name="CihazEkle">
+              <ScalarProperty Name="Id" ColumnName="CihazId" />
+            </EndProperty>
+          </AssociationSetMapping>
           <AssociationSetMapping Name="tblKul_Cihaz" TypeName="Al_WebModel.tblKul_Cihaz" StoreEntitySet="tblKul_Cihaz">
             <EndProperty Name="Kullanicilar">
               <ScalarProperty Name="Id" ColumnName="KullaniciId" />
@@ -609,22 +578,6 @@
           <AssociationSetMapping Name="tblKul_Kanal" TypeName="Al_WebModel.tblKul_Kanal" StoreEntitySet="tblKul_Kanal">
             <EndProperty Name="Kullanicilar">
               <ScalarProperty Name="Id" ColumnName="KullanicilarId" />
-            </EndProperty>
-            <EndProperty Name="KanalEkle">
-              <ScalarProperty Name="Id" ColumnName="KanalEkleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="tbl_cihaz_firma" TypeName="Al_WebModel.tbl_cihaz_firma" StoreEntitySet="tbl_cihaz_firma">
-            <EndProperty Name="SirketEkle">
-              <ScalarProperty Name="Id" ColumnName="SirketId" />
-            </EndProperty>
-            <EndProperty Name="CihazEkle">
-              <ScalarProperty Name="Id" ColumnName="CihazId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <AssociationSetMapping Name="tbl_kanal_sirket" TypeName="Al_WebModel.tbl_kanal_sirket" StoreEntitySet="tbl_kanal_sirket">
-            <EndProperty Name="SirketEkle">
-              <ScalarProperty Name="Id" ColumnName="SirketEkleId" />
             </EndProperty>
             <EndProperty Name="KanalEkle">
               <ScalarProperty Name="Id" ColumnName="KanalEkleId" />

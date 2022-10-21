@@ -257,8 +257,6 @@ namespace Al_Web_2.Controllers
                 if (Convert.ToInt32(frm["FirmaEkle"]) != 0)
                 {
                     kanal.SirketEkleId = Convert.ToInt16(frm["Sirket"].ToString());
-
-
                 }
                 //cihaz.SirketEkles.Clear();
                 //foreach (var item in SirketEkle)
@@ -283,7 +281,7 @@ namespace Al_Web_2.Controllers
             }
             else
             {
-                kanal.SirketEkles.Clear();
+                kanal.SirketEkleId = (int?)null;
             }
           
             //BOŞ GÖNDERİNCE GÜNCELLEMİYOR!!!!!!!!!!!!!!!!!!!!!!!!

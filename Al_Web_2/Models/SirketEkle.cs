@@ -17,10 +17,9 @@ namespace Al_Web_2.Models
         public SirketEkle()
         {
             this.CihazEkles = new HashSet<CihazEkle>();
+            this.KanalEkles = new HashSet<KanalEkle>();
             this.Kullanicilars = new HashSet<Kullanicilar>();
             this.CihazEkles1 = new HashSet<CihazEkle>();
-            this.KanalEkles = new HashSet<KanalEkle>();
-            this.KanalEkles1 = new HashSet<KanalEkle>();
         }
     
         public int Id { get; set; }
@@ -28,9 +27,8 @@ namespace Al_Web_2.Models
         public Nullable<bool> Silindi { get; set; }
     
         public virtual ICollection<CihazEkle> CihazEkles { get; set; }
+        public virtual ICollection<KanalEkle> KanalEkles { get; set; }
         public virtual ICollection<Kullanicilar> Kullanicilars { get; set; }
         public virtual ICollection<CihazEkle> CihazEkles1 { get; set; }
-        public virtual ICollection<KanalEkle> KanalEkles { get; set; }
-        public virtual ICollection<KanalEkle> KanalEkles1 { get; set; }
     }
 }
