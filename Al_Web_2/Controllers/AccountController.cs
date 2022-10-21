@@ -31,7 +31,7 @@ namespace Al_Web_2.Controllers
         {
 
             string sifre1 = Sifre_Md5.MD5Olustur(p.Sifre);
-            var bilgiler = db.Kullanicilar.FirstOrDefault(x => x.Email == p.Email && x.Sifre == sifre1);
+            var bilgiler = db.Kullanicilars.FirstOrDefault(x => x.Email == p.Email && x.Sifre == sifre1);
 
             if (bilgiler != null)
             {
@@ -39,7 +39,7 @@ namespace Al_Web_2.Controllers
                 Session["Mail"] = bilgiler.Email.ToString();
                 Session["Ad"] = bilgiler.Ad.ToString();
                 Session["Soyad"] = bilgiler.Soyad.ToString();
-                return RedirectToAction("Index", "KullaniciEkle");
+                return RedirectToAction("Index", "Home");
 
             }
             else
@@ -56,7 +56,7 @@ namespace Al_Web_2.Controllers
         [HttpPost]
         public ActionResult Register(Kullanicilar data)
         {
-            db.Kullanicilar.Add(data);
+            db.Kullanicilars.Add(data);
             data.Rol = "U";
             db.SaveChanges();
             return RedirectToAction("Login", "Account");
@@ -67,7 +67,7 @@ namespace Al_Web_2.Controllers
         public ActionResult Guncelle()
         {
             var kullanicilar = (string)Session["Mail"];
-            var degerler = db.Kullanicilar.FirstOrDefault(x => x.Email == kullanicilar);
+            var degerler = db.Kullanicilars.FirstOrDefault(x => x.Email == kullanicilar);
             return View(degerler);
         }
 
@@ -75,7 +75,7 @@ namespace Al_Web_2.Controllers
         public ActionResult Guncelle(Kullanicilar data)
         {
             var kullanicilar = (string)Session["Mail"];
-            var user = db.Kullanicilar.Where(x => x.Email == kullanicilar).FirstOrDefault();
+            var user = db.Kullanicilars.Where(x => x.Email == kullanicilar).FirstOrDefault();
             user.Ad = data.Ad;
             user.Soyad = data.Soyad;
             user.Email = data.Email;

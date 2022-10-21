@@ -55,7 +55,7 @@
                         @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
 
                         <br />
-                        <select class="form-control" id="FirmaEkle" multiple="multiple" name="Sirketler">
+                        <select class="form-control" id="FirmaEkle" name="Sirket">
 
                             @for (int i = 0; i < ViewBag.frm.Count; i++)
                             {

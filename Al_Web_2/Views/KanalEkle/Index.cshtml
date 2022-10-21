@@ -49,16 +49,11 @@
 
             </td>  
             <td>
-                <div style='padding: 3px; width:300px; word-break: break-all; word-wrap: break-word; max-width: 100%; height: 80px; overflow: auto;'>
+               
 
-                    @foreach (var sirkets in item.SirketEkles)
-                    {
+                      @(item.SirketEkle?.SirketIsim)
 
-                        <span style="margin-bottom:7px;">@($"{sirkets.SirketIsim}")<br /></span>
-
-                    }
-                </div>
-
+                 
 
             </td>
             @*<td>@(item.Kullanicilar[0]. .SirketEkle?.SirketIsim)</td>*@

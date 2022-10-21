@@ -1222,18 +1222,18 @@ img.mfp-img {
     - Button
 ------------------------------------------*/
 .btn {
-  border: 1px solid #f9b809;
-  line-height: 24px;
-  padding: 10px 30px;
-  font-size: 14px;
-  font-weight: 500;
-  text-transform: uppercase;
-  color: #ffffff;
-  background: #f9b809;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-  transition: all 0.3s ease 0s;
+    border: 1px solid #fd7e14;
+    line-height: 24px;
+    padding: 10px 30px;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #ffffff;
+    background: #fd7e14;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease 0s;
 }
 .btn:focus {
   outline: none;
@@ -1993,18 +1993,18 @@ img.mfp-img {
   color: #ffffff;
 }
 .hero-content a {
-  height: 48px;
-  line-height: 26px;
-  padding: 10px 40px;
-  border: 1px solid #f9b809;
-  background-color: #f9b809;
-  color: #ffffff;
-  border-radius: 50px;
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 500;
-  margin-top: 25px;
+    height: 48px;
+    line-height: 26px;
+    padding: 10px 40px;
+    border: 1px solid #dc3545;
+    background-color: #dc3545;
+    color: #ffffff;
+    border-radius: 50px;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 25px;
 }
 .hero-content a:hover {
   background-color: #1d2736;

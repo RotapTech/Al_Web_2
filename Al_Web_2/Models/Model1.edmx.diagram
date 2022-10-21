@@ -5,16 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d163b86cc9924bc6be199d27c414d148" Name="Diagram1" ZoomLevel="97">
-        <EntityTypeShape EntityType="Al_WebModel.CihazEkle" Width="1.5" PointX="0.75" PointY="1.625" />
-        <EntityTypeShape EntityType="Al_WebModel.KanalEkle" Width="1.5" PointX="0.75" PointY="5.625" />
-        <EntityTypeShape EntityType="Al_WebModel.Kullanicilar" Width="1.5" PointX="5.25" PointY="1" />
-        <EntityTypeShape EntityType="Al_WebModel.SirketEkle" Width="1.5" PointX="3" PointY="1.625" />
-        <EntityTypeShape EntityType="Al_WebModel.sysdiagram" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Al_WebModel.CihazEkle" Width="1.5" PointX="10.25" PointY="1.25" />
+        <EntityTypeShape EntityType="Al_WebModel.KanalEkle" Width="1.5" PointX="1.375" PointY="2.25" />
+        <EntityTypeShape EntityType="Al_WebModel.Kullanicilar" Width="1.5" PointX="4.125" PointY="1.375" />
+        <EntityTypeShape EntityType="Al_WebModel.SirketEkle" Width="1.5" PointX="7.5" PointY="5.25" />
+        <EntityTypeShape EntityType="Al_WebModel.sysdiagram" Width="1.5" PointX="1.375" PointY="6.5" />
+        <AssociationConnector Association="Al_WebModel.FK_CihazEkle_SirketEkle" />
         <AssociationConnector Association="Al_WebModel.FK_Kullanicilar_SirketEkle" />
-        <AssociationConnector Association="Al_WebModel.tbl_cihaz_firma" />
-        <AssociationConnector Association="Al_WebModel.tbl_kanal_sirket" />
         <AssociationConnector Association="Al_WebModel.tblKul_Cihaz" />
         <AssociationConnector Association="Al_WebModel.tblKul_Kanal" />
+        <AssociationConnector Association="Al_WebModel.tbl_cihaz_firma" />
+        <AssociationConnector Association="Al_WebModel.tbl_kanal_sirket" />
+        <AssociationConnector Association="Al_WebModel.FK_KanalEkle_SirketEkle" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

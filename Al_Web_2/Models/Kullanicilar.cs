@@ -27,7 +27,7 @@ namespace Al_Web_2.Models
         public string KullaniciAd { get; set; }
         public string Sifre { get; set; }
         public string Rol { get; set; }
-        public System.DateTime AbonelikTarih { get; set; }
+        public Nullable<System.DateTime> AbonelikTarih { get; set; }
         public Nullable<int> SirketEkleId { get; set; }
         public Nullable<bool> Silindi { get; set; }
     

@@ -1,12 +1,20 @@
 ﻿@using Al_Web_2.Models
 @model List<Kullanicilar>
 @{
+   
+        Layout = "~/Views/Shared/_Layout.cshtml";
+
+    
+
     ViewBag.Title = "Kullanicilar";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style="margin-left:-195px"  >
-    <a href="/KullaniciEkle/Ekle" style="margin-left: 1450px"  class="btn btn-primary">Kullanıcı Ekle</a>
+<div style="margin-left:-195px">
+    <a href="/KullaniciEkle/Ekle" style="margin-left: 1450px" class="btn btn-primary">Kullanıcı Ekle</a>
+
+    @*<div style="margin-left:1100px">
+        <label>Tüm sütunlarda arama yapabilirsiniz</label>
+    </div>*@
 
     <br />
     <br />
@@ -54,7 +62,7 @@
                     @*<td>@Model[i].Sifre</td>
                         <td>@Model[i].SifreTekrar</td>
                         <td>@Model[i].Rol</td>*@
-                    <td>@Model[i].AbonelikTarih.ToString("dd/MM/yyyy")</td>
+                    <td>@Model[i].AbonelikTarih.Value.ToShortDateString()</td>
                     <td>@(Model[i].SirketEkle?.SirketIsim)</td>
 
                     <td>
@@ -111,17 +119,3 @@
 
     });
 </script>
-
-@*<script type="text/javascript" src="@Url.Content("~/Scripts/")jquery-1.7.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#checkBoxAll').click(function () {
-                if ($(this).is(":checked"))
-                    $('.checkbox').prop('checked', true);
-                else
-                    $('.checkbox').prop('checked', false);
-            });
-        });
-
-    </script>*@

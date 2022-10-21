@@ -1,76 +1,85 @@
-﻿<!DOCTYPE html>
+﻿
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        html, body, h1, h2, h3, h4, h5 {
+            font-family: "Raleway", sans-serif
+        }
+
+       
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="~/jQueryMultiSelectDropdown/css/bootstrap-3.1.1.min.css" type="text/css" />
+
     <link rel="stylesheet" href="~/jQueryMultiSelectDropdown/css/bootstrap-multiselect.css" type="text/css" />
+
+
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.2.js"></script>
     <script type="text/javascript" src="~/jQueryMultiSelectDropdown/js/bootstrap-2.3.2.min.js"></script>
     <script type="text/javascript" src="~/jQueryMultiSelectDropdown/js/bootstrap-multiselect.js"></script>
 
-    <style>
-
-        img {
-            opacity: 0.1;
-        }
-    </style>
 
 </head>
 
-<body style="background-image: url('../../NiceAdmin/assets/img/yen.png'); background-repeat: no-repeat; background-position:center;  background-attachment: fixed; background-size: 60% 90%;">
+<body class="w3-light-grey" style="background-repeat: no-repeat; background-position:center;  background-attachment: fixed; background-size: 60% 90%;">
+    <div class="w3-bar w3-top w3-black w3-large" style="padding-bottom:-40px;">
+        @if (User.Identity.IsAuthenticated)
+        {
 
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/Home/Index">POCTURK</a>
-            </div>
-            <ul class="nav navbar-nav">
-                @if (User.IsInRole("A"))
-                {
-                    @*<li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">İşlemler <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><a href="/Islemler/CozumOrtagiEkle">Çözüm Ortağı Ekle</a></li>
-                    <li><a href="/Islemler/CihazEkle">Cihaz Ekle</a></li>
-                    <li><a href="/Islemler/KurumList">Kurum Ekle</a></li>
-                    <li><a href="/Islemler/UserList">Kullanıcı Listesi</a></li>
-                </ul>
-            </li>*@
-                    <li><a href="/KullaniciEkle/Index">Kullanıcı</a></li>
-                    <li><a href="/KanalEkle/Index">Kanal</a></li>
-                    <li><a href="/CihazEkle/Index">Cihaz</a></li>
-                    <li><a href="/FirmaEkle/Index">Firma</a></li>
-
-
-                }
-                @*<li><a href="/Account/Guncelle" style="color:white">@Session["Ad"] @Session["Soyad"]</a></li>*@
-
-                @if (User.IsInRole("U"))
-                {
-
-
-                }
-
+            <ul class="nav navbar-nav" style="float:right">
+                <li><a href="/Account/LogOut" style="background-color: #e7e7e7; color:black; ">Çıkış Yap</a></li>
             </ul>
-            @if (User.Identity.IsAuthenticated)
+        }
+        else
+        {
+            <ul class="nav navbar-nav" style="float:right">
+                <li><a href="/Account/Login">Giriş Yap</a></li>
+            </ul>
+        }
+    </div>
+    <br />
+    <br />
+    <br />
+    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px; margin-left:-10px;" id="mySidebar">
+        <br>
+        <div class="w3-container w3-row">
+            <div class="w3-col s4">
+                <img src="https://www.w3schools.com/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+            </div>
+            <div class="w3-col s8 w3-bar">
+                <span>Hoşgeldin, <strong>@User.Identity.Name</strong></span><br>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+                <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+            </div>
+        </div>
+        <hr>
+        <div class="w3-container">
+            <h5>Dashboard</h5>
+        </div>
+        <div class="w3-bar-block">
+            <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+            @if (User.IsInRole("A"))
             {
-                <ul class="nav navbar-nav" style="float:right">
-                    <li><a href="/Account/LogOut">Çıkış Yap</a></li>
-                </ul>
+                <a href="/KullaniciEkle/Index" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Kullanıcı</a>
+                <a href="/KanalEkle/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Kanal</a>
+                <a href="/CihazEkle/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-users fa-fw"></i>  Cihaz</a>
+                <a href="/FirmaEkle/Index" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Firma</a>
             }
-            else
-            {
-                <ul class="nav navbar-nav" style="float:right">
-                    <li><a href="/Account/Login">Giriş Yap</a></li>
-                </ul>
-            }
-
-
         </div>
     </nav>
+
+
     <div class="container ">
         @RenderBody()
 

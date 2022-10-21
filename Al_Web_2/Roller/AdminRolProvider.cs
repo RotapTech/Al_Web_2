@@ -39,7 +39,7 @@ namespace Al_Web_2.Roller
         public override string[] GetRolesForUser(string username)
         {
             Al_WebEntities1 db = new Al_WebEntities1();
-            var user = db.Kullanicilar.FirstOrDefault(x => x.Email == username);
+            var user = db.Kullanicilars.FirstOrDefault(x => x.Email == username);
 
             return new string[] { user.Rol };
 

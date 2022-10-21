@@ -1,6 +1,17 @@
 ﻿@{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    if (User.IsInRole("A"))
+    {
+
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+
+
+        Layout = "~/Views/Shared/_Layout1.cshtml";
+
+    }
 }
 
 <div class="container">

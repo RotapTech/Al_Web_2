@@ -16,17 +16,19 @@ namespace Al_Web_2.Models
     {
         public CihazEkle()
         {
-            this.SirketEkles = new HashSet<SirketEkle>();
             this.Kullanicilars = new HashSet<Kullanicilar>();
+            this.SirketEkles = new HashSet<SirketEkle>();
         }
     
         public int Id { get; set; }
         public string CihazAd { get; set; }
         public string CihazSeriNo { get; set; }
         public string SimCard { get; set; }
+        public Nullable<int> SirketEkleId { get; set; }
         public Nullable<bool> Silindi { get; set; }
     
-        public virtual ICollection<SirketEkle> SirketEkles { get; set; }
+        public virtual SirketEkle SirketEkle { get; set; }
         public virtual ICollection<Kullanicilar> Kullanicilars { get; set; }
+        public virtual ICollection<SirketEkle> SirketEkles { get; set; }
     }
 }

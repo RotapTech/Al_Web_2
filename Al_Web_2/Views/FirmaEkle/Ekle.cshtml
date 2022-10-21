@@ -45,6 +45,55 @@
                     </select>
                 </div>
 
+                <div class="tox-form-group--maximize" style="margin-top:30px;">
+                    <label>Kanal</label>
+                    @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
+
+                    <br />
+                    <select class="form-control" id="KanalEkle" multiple="multiple" name="KanalEkle">
+
+                        @for (int i = 0; i < ViewBag.knl.Count; i++)
+                        {
+                            if (ViewBag.knl[i].Selected == true)
+                            {
+                                <option selected value="@ViewBag.knl[i].Value">@ViewBag.knl[i].Text</option>
+
+                            }
+                            else
+                            {
+                                <option value="@ViewBag.knl[i].Value">@ViewBag.knl[i].Text</option>
+
+                            }
+                        }
+
+                    </select>
+                </div>
+
+                <div class="tox-form-group--maximize" style="margin-top:30px;">
+                    <label>Cihaz</label>
+                    @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
+
+                    <br />
+                    <select class="form-control" id="CihazEkle" multiple="multiple" name="CihazEkle">
+
+                        @for (int i = 0; i < ViewBag.chz.Count; i++)
+                        {
+                            if (ViewBag.chz[i].Selected == true)
+                            {
+                                <option selected value="@ViewBag.chz[i].Value">@ViewBag.chz[i].Text</option>
+
+                            }
+                            else
+                            {
+                                <option value="@ViewBag.chz[i].Value">@ViewBag.chz[i].Text</option>
+
+                            }
+                        }
+
+
+                    </select>
+                </div>
+
 
                 <br />
                 <br />
@@ -60,6 +109,52 @@
         $('#kullanicilar').multiselect({
             includeSelectAllOption: true
         });
+
+        $('#KanalEkle').multiselect({
+            includeSelectAllOption: true
+        });
+
+        $('#CihazEkle').multiselect({
+            includeSelectAllOption: true
+        });
     });
+
 </script>
+
+
+@*<!DOCTYPE html>
+<html>
+<head>
+    <title>How to create searchable select box</title>
+ JS for jQuery 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+ CSS for searching 
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+ JS for searching 
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        // .js-example-basic-single declare this class into your select box
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
+</head>
+<body>
+
+    <h1>How to create searchable select box</h1>
+
+    <label for="cars">Choose a car:</label>
+
+    <select name="cars" id="cars" class="js-example-basic-single">
+        <option value="volvo">Volvo</option>
+        <option value="saab">Saab</option>
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+    </select>
+
+</body>
+</html>*@
+
+
 
