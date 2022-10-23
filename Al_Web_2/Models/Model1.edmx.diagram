@@ -5,10 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d163b86cc9924bc6be199d27c414d148" Name="Diagram1" ZoomLevel="97">
-        <EntityTypeShape EntityType="Al_WebModel.CihazEkle" Width="1.5" PointX="3" PointY="1.5" />
-        <EntityTypeShape EntityType="Al_WebModel.KanalEkle" Width="1.5" PointX="3" PointY="5" />
-        <EntityTypeShape EntityType="Al_WebModel.Kullanicilar" Width="1.5" PointX="5.25" PointY="2.75" />
-        <EntityTypeShape EntityType="Al_WebModel.SirketEkle" Width="1.5" PointX="0.75" PointY="3.25" />
+        <EntityTypeShape EntityType="Al_WebModel.CihazEkle" Width="1.5" PointX="4.375" PointY="0.875" />
+        <EntityTypeShape EntityType="Al_WebModel.KanalEkle" Width="1.5" PointX="4.5" PointY="5.75" />
+        <EntityTypeShape EntityType="Al_WebModel.Kullanicilar" Width="1.5" PointX="9" PointY="3.375" />
+        <EntityTypeShape EntityType="Al_WebModel.SirketEkle" Width="1.5" PointX="0.625" PointY="2.875" />
         <EntityTypeShape EntityType="Al_WebModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" />
         <AssociationConnector Association="Al_WebModel.FK_CihazEkle_SirketEkle" />
         <AssociationConnector Association="Al_WebModel.FK_KanalEkle_SirketEkle" />

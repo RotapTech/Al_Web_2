@@ -1,16 +1,14 @@
 ﻿@using Al_Web_2.Models
 @model List<Kullanicilar>
 @{
-   
-        Layout = "~/Views/Shared/_Layout.cshtml";
-
-    
-
     ViewBag.Title = "Kullanicilar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-<div style="margin-left:-195px">
-    <a href="/KullaniciEkle/Ekle" style="margin-left: 1450px" class="btn btn-primary">Kullanıcı Ekle</a>
+
+<div style="max-width: 100% !important; position: relative; margin-left:10px;">
+    <a href="/KullaniciEkle/Ekle" style="margin-left: 1000px" class="btn btn-primary">Kullanıcı Ekle</a>
 
     @*<div style="margin-left:1100px">
         <label>Tüm sütunlarda arama yapabilirsiniz</label>
@@ -39,7 +37,7 @@
                         <th>Abonelik Tarihi</th>
                         <th>Firma</th>
                         <th>Kanal İsim - Tip</th>
-                        <th>Cihaz İsim - Seri No - Sim Kart</th>
+                        <th style="max-width:30% !important">Cihaz İsim - Seri No - Sim Kart</th>
                         <th>Sil</th>
                         <th>Güncelle</th>
                     }

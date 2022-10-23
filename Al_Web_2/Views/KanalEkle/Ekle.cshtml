@@ -23,40 +23,12 @@
                     <input type="text" name="Type" class="form-control" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
                 </div>
 
-
-                <div class="tox-form-group--maximize" style="margin-top:30px;">
-                    <label>Kullanıcı</label>
-                    <br />
-                    @*@Html.DropDownListFor(x => x.Kullanicilar, (List<SelectListItem>)ViewBag.kllnc, new { @class = "form-control" })*@
-
-                    @*@Html.ListBoxFor(x => x.Kullanicilar, (List<SelectListItem>)ViewBag.kllnc, new { @class = "form-control" })*@
-
-                    <select class="form-control" id="kullanicilar" multiple="multiple" name="Kullanicilar">
-
-
-                        @for (int i = 0; i < ViewBag.kllnc.Count; i++)
-                        {
-                            if (ViewBag.kllnc[i].Selected == true)
-                            {
-                                <option selected value="@ViewBag.kllnc[i].Value">@ViewBag.kllnc[i].Text</option>
-
-                            }
-                            else
-                            {
-                                <option value="@ViewBag.kllnc[i].Value">@ViewBag.kllnc[i].Text</option>
-
-                            }
-                        }
-
-                    </select>
-                </div>
-
                 <div class="tox-form-group--maximize" style="margin-top:30px;">
                     <label>Firma</label>
                     @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
 
                     <br />
-                    <select class="form-control" id="FirmaEkle" name="SirketEkle" >
+                    <select class="form-control" id="FirmaEkle" name="SirketEkle">
 
                         @for (int i = 0; i < ViewBag.frm.Count; i++)
                         {
@@ -75,6 +47,35 @@
 
                     </select>
                 </div>
+                <div class="tox-form-group--maximize" style="margin-top:30px;">
+                    <label>Kullanıcı</label>
+                    <br />
+                    @*@Html.DropDownListFor(x => x.Kullanicilar, (List<SelectListItem>)ViewBag.kllnc, new { @class = "form-control" })*@
+
+                    @*@Html.ListBoxFor(x => x.Kullanicilar, (List<SelectListItem>)ViewBag.kllnc, new { @class = "form-control" })*@
+
+                    <select class="form-control" id="kullanicilar" multiple="multiple" name="Kullanicilar">
+
+
+                        @for (int i = 0; i < ViewBag.kllnc.Count; i++)
+                            {
+                                if (ViewBag.kllnc[i].Selected == true)
+                                {
+                                    <option selected value="@ViewBag.kllnc[i].Value">@ViewBag.kllnc[i].Text</option>
+
+                                }
+                                else
+                                {
+                                    <option value="@ViewBag.kllnc[i].Value">@ViewBag.kllnc[i].Text</option>
+
+                                }
+                            }
+
+
+                    </select>
+                </div>
+
+
 
 
                 <br />
@@ -85,14 +86,76 @@
         </div>
     </div>
 }
+@*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>*@
+
 
 <script type="text/javascript">
-    $(function () {
-        $('#kullanicilar').multiselect({
-            includeSelectAllOption: true
+    /*$(document).ready(*/
+        $(function () {
+            $('#kullanicilar').multiselect({
+                includeSelectAllOption: true
+            });
+            $('#FirmaEkle').multiselect({
+                includeSelectAllOption: true
+            });
+
+            $('#FirmaEkle').change(function () {
+                var firmaId = $(this).val();
+                $.ajax({
+                    url: "/kanalEkle/firmaKulaniciGetir",
+                    type: "POST",
+                    data: { "firmaId": firmaId },
+                    error: function (request) {
+                        console.log(request);
+                    },
+                    success: function (response) {
+                        debugger
+            //            let kullanici = document.querySelector("#kullanicilar");
+            //            let markup = "";
+            //            response.forEach(x => {
+                        
+            //                if (x.Selected == true) {
+
+            //                    markup += `<option selected value="${x.Value}">${x.Text}</option>`;
+
+            //                }
+            //                else {
+            //                    markup += `<option value="${x.Value}">${x.Text}</option>`;
+
+            //                }
+            //            });
+            //            kullanici.innerHTML = markup;
+            //------------------------------------------
+
+            //            kullanicilar.appendChild
+            //            let kullanicilar = document.querySelector("#kullanicilar");
+            //            kullanicilar.innerHTML = `<option value = "multiselect-all">Tümünü Seç</option>`;
+            //            kullanicilar.innerHTML = markup;
+            //            console.log(kullanicilar)
+
+            //            kullanicilar.empty();
+            //            kullanicilar.append(markup);
+
+
+            //            kullanicilar.innerHTML = `<option value = "multiselect-all">Tümünü Seç</option>`;
+            //            kullanicilar.innerHTML += markup;
+
+            //            console.log(kullanicilar.innerHTML);
+
+
+            //            kullanicilar.append(markup);
+
+            //            console.log(kullanicilar);
+
+
+
+
+            //            paragraph = $("#paragraph-text");
+            //            paragraph.empty();
+            //            paragraph.append(markup);
+                    }
+                });
+            });
         });
-        $('#FirmaEkle').multiselect({
-            includeSelectAllOption: true
-        });
-    });
 </script>
+

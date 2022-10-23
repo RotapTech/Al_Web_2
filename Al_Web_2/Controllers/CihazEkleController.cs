@@ -17,16 +17,14 @@ namespace Al_Web_2.Controllers
         {
             var list = db.CihazEkles.Where(x => x.Silindi == false).ToList();
 
-            //foreach (var item in list)
-            //{
-            //    foreach (var items in item.SirketEkles.ToList())
-            //    {
-            //        if (items.Silindi == true)
-            //        {
-            //            item.SirketEkles.Remove(items);
-            //        }
-            //    }
-            //}
+            foreach (var item in list)
+            {
+                 if (item.SirketEkle?.Silindi == true)
+                    {
+                    item.SirketEkle = null;
+                    }
+                db.SaveChanges();
+            }
 
 
             return View(list);
@@ -226,10 +224,13 @@ namespace Al_Web_2.Controllers
                     //model.Kullanicilar.Add(kullanici);
                 }
             }
-            if (frm["SirketEkle"] != null)
+            if (frm["FirmaEkle"] != null)
             {
+                if (Convert.ToInt32(frm["FirmaEkle"]) != 0)
+                {
+                    cihaz.SirketEkleId = Convert.ToInt16(frm["FirmaEkle"].ToString());
+                }
                 //cihaz.SirketEkles.Clear();
-                cihaz.SirketEkleId = Convert.ToInt16(frm["SirketEkle"].ToString());
                 //foreach (var item in SirketEkle)
                 //{
 
@@ -250,7 +251,11 @@ namespace Al_Web_2.Controllers
                 //}
 
             }
-          
+            else
+            {
+                cihaz.SirketEkleId = (int?)null;
+            }
+
 
             cihaz.CihazAd = model.CihazAd;
             cihaz.CihazSeriNo = model.CihazSeriNo;

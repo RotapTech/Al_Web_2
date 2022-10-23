@@ -54,7 +54,7 @@ namespace Al_Web_2.Controllers
 
         public ActionResult Ekle()
         {
-            List<SelectListItem> deger1 = (from x in db.Kullanicilars.Where(x => x.Rol != "A" && x.Silindi == false).ToList()
+            List<SelectListItem> deger1 = (from x in db.Kullanicilars.Where(x => x.Rol != "A" && x.Silindi == false && x.KanalEkles.Count == 0 && x.SirketEkle == null).ToList()
                                            select new SelectListItem
                                            {
                                                Text = x.Ad + " " + x.Soyad,
@@ -175,7 +175,7 @@ namespace Al_Web_2.Controllers
             var kanal = db.KanalEkles.Where(x => x.Id == id).FirstOrDefault();
 
 
-            List<SelectListItem> deger1 = (from x in db.Kullanicilars.Where(x => x.Rol != "A").ToList()
+            List<SelectListItem> deger1 = (from x in db.Kullanicilars.Where(x => x.Rol != "A" && x.SirketEkleId == kanal.SirketEkleId).ToList()
                                            select new SelectListItem
                                            {
                                                Text = x.Ad + " " + x.Soyad,
@@ -252,11 +252,16 @@ namespace Al_Web_2.Controllers
 
                 }
             }
-            if (frm["FirmaEkle"] != null)
+            if (frm["Sirket"] != null)
             {
-                if (Convert.ToInt32(frm["FirmaEkle"]) != 0)
+                if (Convert.ToInt32(frm["Sirket"]) != 0)
                 {
                     kanal.SirketEkleId = Convert.ToInt16(frm["Sirket"].ToString());
+                }
+                else
+                {
+                    kanal.SirketEkleId = (int?)null;
+
                 }
                 //cihaz.SirketEkles.Clear();
                 //foreach (var item in SirketEkle)
@@ -296,7 +301,29 @@ namespace Al_Web_2.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public JsonResult FirmaKulaniciGetir(string firmaId)
+        {
+            //string text = mostRecents.Find(x => x.firma == firma).Paragraphs;
+
+            //text += "<input type=\"hidden\" value=\"" + text + "\" id=\"Paragraphs\" name=\"Paragraphs\">"; // post islemi icin
+
+
+            int sirketId = int.Parse(firmaId);
+
+            List<SelectListItem> firma = (from x in db.Kullanicilars.Where(x => x.Rol != "A" && x.Silindi == false && x.SirketEkleId == sirketId).ToList()
+                                          select new SelectListItem
+                                          {
+                                              Text = x.Ad + " " + x.Soyad,
+                                              Value = x.Id.ToString()
+                                          }).ToList();
+  
+            return Json(firma);
+        }
+
+
     }
+
 }
 
 

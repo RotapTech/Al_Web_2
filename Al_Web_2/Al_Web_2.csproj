@@ -1596,7 +1596,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Theme\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="NiceAdmin\assets\vendor\tinymce\tinymce.d.ts" />

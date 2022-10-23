@@ -23,7 +23,30 @@
                         <label>Type</label>
                         <input type="text" name="Type" class="form-control" value="@Model.Type" required oninvalid="this.setCustomValidity('Lütfen işaretli yeri doldurunuz')" onchange="this.setCustomValidity('')" />
                     </div>
+                    <div class="tox-form-group--maximize" style="margin-top:30px;">
+                        <label>Firma</label>
+                        @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
 
+                        <br />
+                        <select class="form-control" id="FirmaEkle" name="Sirket">
+
+                            @for (int i = 0; i < ViewBag.frm.Count; i++)
+                            {
+                                if (ViewBag.frm[i].Selected == true)
+                                {
+                                    <option selected value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
+
+                                }
+                                else
+                                {
+                                    <option value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
+
+                                }
+                            }
+
+
+                        </select>
+                    </div>
                     <div class="tox-form-group--maximize" style="margin-top:30px;">
                         <label>Kullanıcı</label>
                         <br />
@@ -50,30 +73,7 @@
 
                     </div>
 
-                    <div class="tox-form-group--maximize" style="margin-top:30px;">
-                        <label>Firma</label>
-                        @*@Html.ListBoxFor(x => x.KanalEkle, (List<SelectListItem>)ViewBag.knl, new { @class = "form-control" })*@
 
-                        <br />
-                        <select class="form-control" id="FirmaEkle" name="Sirket">
-
-                            @for (int i = 0; i < ViewBag.frm.Count; i++)
-                            {
-                                if (ViewBag.frm[i].Selected == true)
-                                {
-                                    <option selected value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
-
-                                }
-                                else
-                                {
-                                    <option value="@ViewBag.frm[i].Value">@ViewBag.frm[i].Text</option>
-
-                                }
-                            }
-
-
-                        </select>
-                    </div>
 
 
                     <br />

@@ -191,13 +191,16 @@ namespace Al_Web_2.Controllers
         {
             var sirket = db.SirketEkles.Where(x => x.Id == id).FirstOrDefault();
 
+      
+
+
             var Kullanicilar = (from x in db.Kullanicilars
-                          where x.Silindi == false && x.Rol != "A" && !(db.Kullanicilars.Any(z => z.SirketEkleId == sirket.Id && z.SirketEkleId != sirket.Id))
-                          select x).AsEnumerable().Select(x => new SelectListItem
-                          {
-                              Text = x.Ad + " "+ x.Soyad,
-                              Value = x.Id.ToString()
-                          });
+                                where x.Silindi == false && x.Rol != "A" && !(db.SirketEkles.Any(z => z.Id == x.SirketEkleId && x.SirketEkleId != sirket.Id))
+                                select x).AsEnumerable().Select(x => new SelectListItem
+                                {
+                                    Text = x.Ad + " " + x.Soyad,
+                                    Value = x.Id.ToString()
+                                });
             var Kullanicilarlist = Kullanicilar.ToList();
 
 
@@ -207,15 +210,16 @@ namespace Al_Web_2.Controllers
                 Kullanicilarlist.Where(x => x.Value == kullanici.Id.ToString()).FirstOrDefault().Selected = true;
             }
             ViewBag.kllnc = Kullanicilarlist;
+        
 
-            var deger11 = (from x in db.KanalEkles
+            var Kanallar = (from x in db.KanalEkles
                            where x.Silindi == false && !(db.SirketEkles.Any(z => z.Id == x.SirketEkleId && x.SirketEkleId != sirket.Id))
                           select x).AsEnumerable().Select(x => new SelectListItem
                           {
                               Text = x.Name + " " + x.Type,
                               Value = x.Id.ToString()
                           });
-            var deger11list = deger11.ToList();
+            var deger11list = Kanallar.ToList();
 
 
             foreach (var kullanici in sirket.KanalEkles)
